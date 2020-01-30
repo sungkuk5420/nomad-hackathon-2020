@@ -1,10 +1,20 @@
 import express from "express";
 const globalRouter = express.Router();
-/* GET home page. */
 
+import multer from "multer";
+
+multer.diskStorage({
+  filename: (req, file, cb) => {
+    console.log(file);
+    cb(null, file.originalname);
+  }
+});
+const uploader = multer({
+  dest: "../backend/public/cardImages/"
+});
 import { addTeamCard, getTeamCards } from "../controllers/globalController";
 
-globalRouter.post("/addTeamCard", addTeamCard);
+globalRouter.post("/addTeamCard", uploader.any(), addTeamCard);
 globalRouter.get("/getTeamCards", getTeamCards);
 
 export default globalRouter;

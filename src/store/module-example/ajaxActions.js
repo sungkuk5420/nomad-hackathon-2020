@@ -13,10 +13,18 @@ export const ajaxActions = {
     };
     let api = axios.create();
     console.log("url= ", options.url());
+
+    const formData = new FormData();
+    formData.append("mainImage", params.addTeamCard.mainImage);
+    formData.append("firstPeopleImage", params.addTeamCard.firstPeopleImage);
+    formData.append("secondPeopleImage", params.addTeamCard.secondPeopleImage);
+    formData.append("addTeamCard", JSON.stringify(params.addTeamCard));
     axios
       .all([
-        api.post(options.url(), {
-          params
+        api.post(options.url(), formData, {
+          headers: {
+            "content-type": "multipart/form-data"
+          }
         })
       ])
       .then(responses => {

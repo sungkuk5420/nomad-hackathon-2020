@@ -23,7 +23,7 @@
             :beforeUpload="beforeUpload"
             @change="mainHandleChange"
           >
-            <img v-if="addTeamCard.mainImage" :src="addTeamCard.mainImage" alt="avatar" />
+            <img v-if="mainImagePreview" :src="mainImagePreview" alt="avatar" />
             <div v-else>
               <a-icon :type="mainLoding ? 'loading' : 'plus'" />
               <div class="ant-upload-text">Upload</div>
@@ -51,11 +51,7 @@
               :beforeUpload="beforeUpload"
               @change="firstHandleChange"
             >
-              <img
-                v-if="addTeamCard.firstPeopleImage"
-                :src="addTeamCard.firstPeopleImage"
-                alt="avatar"
-              />
+              <img v-if="firstPeopleImagePreview" :src="firstPeopleImagePreview" alt="avatar" />
               <div v-else>
                 <a-icon :type="firstLoding ? 'loading' : 'plus'" />
                 <div class="ant-upload-text">Upload</div>
@@ -76,11 +72,7 @@
               :beforeUpload="beforeUpload"
               @change="secondHandleChange"
             >
-              <img
-                v-if="addTeamCard.secondPeopleImage"
-                :src="addTeamCard.secondPeopleImage"
-                alt="avatar"
-              />
+              <img v-if="secondPeopleImagePreview" :src="secondPeopleImagePreview" alt="avatar" />
               <div v-else>
                 <a-icon :type="secondLoding ? 'loading' : 'plus'" />
                 <div class="ant-upload-text">Upload</div>
@@ -115,6 +107,9 @@ export default {
       mainLoding: false,
       firstLoding: false,
       secondLoding: false,
+      mainImagePreview: "",
+      firstPeopleImagePreview: "",
+      secondPeopleImagePreview: "",
       addTeamCard: {
         teamType: "alone",
         mainImage: "",
@@ -139,6 +134,9 @@ export default {
         this.firstLoding = false;
         this.secondLoding = false;
         this.buttonLoading = false;
+        this.mainImagePreview = "";
+        this.firstPeopleImagePreview = "";
+        this.secondPeopleImagePreview = "";
         this.addTeamCard = {
           teamType: "alone",
           mainImage: "",
@@ -153,7 +151,7 @@ export default {
   },
   methods: {
     handleOk(e) {
-      this.buttonLoading = true;
+      // this.buttonLoading = true;
       if (this.addTeamCard.firstPeopleName == "") {
         this.$message.error("팀원 1의 이름을 입력해주세요.");
         this.buttonLoading = false;
@@ -197,9 +195,10 @@ export default {
         return;
       }
       if (info.file.status === "done") {
+        this.addTeamCard.mainImage = info.file.originFileObj;
         // Get this url from response in real world.
         getBase64(info.file.originFileObj, imageUrl => {
-          this.addTeamCard.mainImage = imageUrl;
+          this.mainImagePreview = imageUrl;
           this.mainLoding = false;
           this.buttonLoading = false;
         });
@@ -215,8 +214,11 @@ export default {
         this.$refs.firstPeople.style.height = "auto";
         this.$refs.secondPeople.style.height = "auto";
         // Get this url from response in real world.
+
+        this.addTeamCard.firstPeopleImage = info.file.originFileObj;
+        // Get this url from response in real world.
         getBase64(info.file.originFileObj, imageUrl => {
-          this.addTeamCard.firstPeopleImage = imageUrl;
+          this.firstPeopleImagePreview = imageUrl;
           this.firstLoding = false;
           this.buttonLoading = false;
 
@@ -242,8 +244,10 @@ export default {
         // Get this url from response in real world.
         this.$refs.firstPeople.style.height = "auto";
         this.$refs.secondPeople.style.height = "auto";
+        this.addTeamCard.secondPeopleImage = info.file.originFileObj;
+        // Get this url from response in real world.
         getBase64(info.file.originFileObj, imageUrl => {
-          this.addTeamCard.secondPeopleImage = imageUrl;
+          this.secondPeopleImagePreview = imageUrl;
           this.secondLoding = false;
           this.buttonLoading = false;
 
