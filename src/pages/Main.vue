@@ -19,18 +19,30 @@
         background: '#fff',
         minHeight: '280px'
       }"
+      :class="loading ? 'overflow-hidden' : ''"
     >
       <a-card
         hoverable
         class="profile-card"
         v-for="(item, index) in teamCards"
         :key="index"
+        v-show="!loading"
       >
         <img alt="example" :src="item.firstPeopleImage" slot="cover" />
         <a-card-meta :title="item.peopleName">
           <template slot="description">{{ item.comment }}</template>
         </a-card-meta>
       </a-card>
+      <a-skeleton
+        :loading="loading"
+        active
+        avatar
+        class="card-skeleton ant-card profile-card ant-card-bordered"
+        v-for="(item, index) in skeletonArr"
+        :key="index"
+      >
+      </a-skeleton>
+
       <add-team></add-team>
     </a-layout-content>
   </a-layout>
@@ -45,12 +57,44 @@ export default {
     AddTeam
   },
   data() {
-    return {};
+    return {
+      loading: true,
+      skeletonArr: [
+        {},
+        {},
+        {},
+        {},
+        {},
+        {},
+        {},
+        {},
+        {},
+        {},
+        {},
+        {},
+        {},
+        {},
+        {},
+        {},
+        {},
+        {},
+        {},
+        {},
+        {}
+      ]
+    };
   },
   computed: {
     ...mapGetters({
       teamCards: "getTeamCards"
     })
+  },
+  watch: {
+    teamCards(cards) {
+      if (cards.length > 0) {
+        this.loading = false;
+      }
+    }
   },
   mounted() {
     this.getCards();
@@ -80,6 +124,9 @@ export default {
     flex: none;
     flex-wrap: wrap;
     overflow: auto;
+    &.overflow-hidden {
+      overflow: hidden;
+    }
   }
   .header {
     display: flex;
@@ -115,6 +162,26 @@ export default {
       overflow: hidden;
 
       img {
+      }
+    }
+  }
+
+  .card-skeleton {
+    display: flex;
+    flex-direction: column;
+    .ant-skeleton-header {
+      display: inline-flex;
+      padding: 0;
+      .ant-skeleton-avatar {
+        border-radius: 0;
+        width: 100%;
+        height: 250px;
+      }
+    }
+    .ant-skeleton-content {
+      padding: 0 24px;
+      .ant-skeleton-title {
+        display: none;
       }
     }
   }
