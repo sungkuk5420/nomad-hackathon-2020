@@ -5,7 +5,7 @@
       title="참가자 카드 등록"
       onOk="handleOk"
       :maskClosable="false"
-      v-bind:class="addTeamData.teamType"
+      v-bind:class="addTeamCard.teamType"
     >
       <template slot="footer">
         <a-button key="back" @click="handleCancel">취소</a-button>
@@ -21,7 +21,7 @@
       <a-radio-group
         defaultValue="alone"
         buttonStyle="solid"
-        v-model="addTeamData.teamType"
+        v-model="addTeamCard.teamType"
       >
         <a-radio-button value="alone">개인</a-radio-button>
         <a-radio-button value="team">팀</a-radio-button>
@@ -39,8 +39,8 @@
               @change="firstHandleChange"
             >
               <img
-                v-if="addTeamData.firstPeople.image"
-                :src="addTeamData.firstPeople.image"
+                v-if="addTeamCard.firstPeopleImage"
+                :src="addTeamCard.firstPeopleImage"
                 alt="avatar"
               />
               <div v-else>
@@ -51,10 +51,10 @@
           </div>
           <a-input
             placeholder="참가자 1 이름"
-            v-model="addTeamData.firstPeople.name"
+            v-model="addTeamCard.firstPeopleName"
           />
         </div>
-        <div class="people" v-show="addTeamData.teamType == 'team'">
+        <div class="people" v-show="addTeamCard.teamType == 'team'">
           <div class="people__image" ref="secondPeople">
             <a-upload
               name="avatar"
@@ -66,8 +66,8 @@
               @change="secondHandleChange"
             >
               <img
-                v-if="addTeamData.secondPeople.image"
-                :src="addTeamData.secondPeople.image"
+                v-if="addTeamCard.secondPeopleImage"
+                :src="addTeamCard.secondPeopleImage"
                 alt="avatar"
               />
               <div v-else>
@@ -78,13 +78,13 @@
           </div>
           <a-input
             placeholder="참가자 2 이름"
-            v-model="addTeamData.secondPeople.name"
+            v-model="addTeamCard.secondPeopleName"
           />
         </div>
         <a-input
           style="margin-top:10px;"
           placeholder="포부 한마디"
-          v-model="addTeamData.comment"
+          v-model="addTeamCard.comment"
         />
       </div>
     </a-modal>
@@ -105,16 +105,12 @@ export default {
       visible: false,
       firstLoding: false,
       secondLoding: false,
-      addTeamData: {
+      addTeamCard: {
         teamType: "alone",
-        firstPeople: {
-          name: "",
-          image: ""
-        },
-        secondPeople: {
-          name: "",
-          image: ""
-        },
+        firstPeopleImage: "",
+        firstPeopleName: "",
+        secondPeopleImage: "",
+        secondPeopleName: "",
         comment: ""
       }
     };
@@ -127,26 +123,44 @@ export default {
   methods: {
     handleOk(e) {
       this.modalLoading = true;
-      if (this.addTeamData.firstPeople.image == "") {
+      if (this.addTeamCard.firstPeopleImage == "") {
         this.$message.error("팀원 1의 이미지를 등록해주세요.");
         this.modalLoading = false;
-      } else if (this.addTeamData.firstPeople.name == "") {
+      } else if (this.addTeamCard.firstPeopleName == "") {
         this.$message.error("팀원 1의 이름을 입력해주세요.");
         this.modalLoading = false;
-      } else if (this.addTeamData.secondPeople.image == "") {
+      } else if (
+        this.addTeamCard.teamType == "team" &&
+        this.addTeamCard.secondPeopleImage == ""
+      ) {
         this.$message.error("팀원 2의 이미지를 등록해주세요.");
         this.modalLoading = false;
-      } else if (this.addTeamData.secondPeople.name == "") {
+      } else if (
+        this.addTeamCard.teamType == "team" &&
+        this.addTeamCard.secondPeopleName == ""
+      ) {
         this.$message.error("팀원 2의 이름을 입력해주세요.");
         this.modalLoading = false;
-      } else if (this.addTeamData.comment == "") {
+      } else if (
+        this.addTeamCard.teamType == "team" &&
+        this.addTeamCard.comment == ""
+      ) {
         this.$message.error("포부 한마디를 입력해주세요.");
         this.modalLoading = false;
       } else {
+        console.log(this.addTeamCard);
+        let vueObj = this;
+        let addTeamCard = this.addTeamCard;
         setTimeout(() => {
-          this.$message.success("등록완료");
-          this.$store.dispatch(T.CHANGE_MODAL_VISIBLE);
-          this.firstLoding = false;
+          this.$store.dispatch(T.ADD_TEAM_CARD, {
+            addTeamCard,
+            cb: () => {
+              vueObj.firstLoding = false;
+              vueObj.$message.success("등록완료");
+              vueObj.$store.dispatch(T.CHANGE_MODAL_VISIBLE);
+            }
+          });
+          this;
         }, 500);
       }
     },
@@ -163,7 +177,7 @@ export default {
         this.$refs.secondPeople.style.height = "auto";
         // Get this url from response in real world.
         getBase64(info.file.originFileObj, imageUrl => {
-          this.addTeamData.firstPeople.image = imageUrl;
+          this.addTeamCard.firstPeopleImage = imageUrl;
           this.firstLoding = false;
 
           setTimeout(() => {
@@ -188,7 +202,7 @@ export default {
         this.$refs.firstPeople.style.height = "auto";
         this.$refs.secondPeople.style.height = "auto";
         getBase64(info.file.originFileObj, imageUrl => {
-          this.addTeamData.secondPeople.image = imageUrl;
+          this.addTeamCard.secondPeopleImage = imageUrl;
           this.secondLoding = false;
 
           setTimeout(() => {

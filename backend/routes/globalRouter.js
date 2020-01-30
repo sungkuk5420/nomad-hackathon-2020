@@ -2,10 +2,8 @@ import express from "express";
 const globalRouter = express.Router();
 /* GET home page. */
 
-import { 
-    home,
-} from "../controllers/globalController";
+import { addTeamCard } from "../controllers/globalController";
 
-globalRouter.get("/", home);
+globalRouter.post("/addTeamCard", addTeamCard);
 
 export default globalRouter;

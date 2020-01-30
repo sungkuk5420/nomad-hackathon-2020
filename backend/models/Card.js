@@ -1,17 +1,13 @@
 import mongoose from "mongoose";
-import passportLocalMongoose from "passport-local-mongoose";
 
 const CardSchema = new mongoose.Schema({
-  name: Array,
-  images: Array,
-  comment: [
-    {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Comment"
-    }
-  ]
+  teamType: String,
+  firstPeopleImage: String,
+  firstPeopleName: String,
+  secondPeopleImage: String,
+  secondPeopleName: String,
+  comment: String
 });
-const model = mongoose.model("ItemList", CardSchema);
-
+const model = mongoose.model("Card", CardSchema);
 
 export default model;

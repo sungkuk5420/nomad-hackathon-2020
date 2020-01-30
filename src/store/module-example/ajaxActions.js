@@ -1,14 +1,14 @@
 import axios from "axios";
 
-// const apiURL = "http://localhost:8000";
-const apiURL = "https://devkim.dev";
+const apiURL = "http://localhost:4000";
+// const apiURL = "https://devkim.dev";
 
 export const ajaxActions = {
-  joinUser(joinUser, cSuccess, cError) {
-    console.log(joinUser);
+  addTeamCard(params, cSuccess, cError) {
+    console.log(params);
     let options = {
       url() {
-        return `${apiURL}/joinUser`;
+        return `${apiURL}/addTeamCard`;
       }
     };
     let api = axios.create();
@@ -16,7 +16,7 @@ export const ajaxActions = {
     axios
       .all([
         api.post(options.url(), {
-          joinUser
+          params
         })
       ])
       .then(responses => {
