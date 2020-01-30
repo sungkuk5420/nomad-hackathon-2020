@@ -32,6 +32,7 @@
         v-show="!loading"
         @click="alertMsg"
       >
+        <a-tag color="blue" slot="cover">{{item.teamType=='alone'?'개인':'팀'}}</a-tag>
         <img
           alt="example"
           v-if="item.mainImage&&item.mainImage!=''"
@@ -155,6 +156,15 @@ export default {
   height: 100%;
 }
 #components-layout-demo-fixed {
+  .ant-tag {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    width: 40px;
+    display: flex;
+    justify-content: center;
+    flex: none;
+  }
   .ant-card-body {
     position: relative;
   }
