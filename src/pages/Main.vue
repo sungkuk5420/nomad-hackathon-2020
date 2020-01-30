@@ -28,7 +28,7 @@
         hoverable
         class="profile-card"
         v-for="(item, index) in teamCards"
-        :key="index"
+        :key="'profile-card'+index"
         v-show="!loading"
         @click="alertMsg"
       >
@@ -36,7 +36,7 @@
         <img
           alt="example"
           v-if="item.mainImage&&item.mainImage!=''"
-          :src="item.mainImage"
+          :src="imageServerUrl+item.mainImage"
           slot="cover"
         />
         <div class="main-image-text" v-if="!item.mainImage||item.mainImage==''" slot="cover">
@@ -48,7 +48,7 @@
           <img
             alt="example"
             v-if="item.firstPeopleImage!=''"
-            :src="item.firstPeopleImage"
+            :src="imageServerUrl+item.firstPeopleImage"
             class="ant-avatar ant-avatar-lg ant-avatar-circle ant-avatar-icon"
           />
           <a-avatar
@@ -59,7 +59,7 @@
           <img
             alt="example"
             v-if="item.teamType == 'team'&&item.secondPeopleImage!=''"
-            :src="item.secondPeopleImage"
+            :src="imageServerUrl+item.secondPeopleImage"
             class="ant-avatar ant-avatar-lg ant-avatar-circle ant-avatar-icon"
           />
         </div>
@@ -120,7 +120,8 @@ export default {
   },
   computed: {
     ...mapGetters({
-      teamCards: "getTeamCards"
+      teamCards: "getTeamCards",
+      imageServerUrl: "getImageServerUrl"
     })
   },
   watch: {

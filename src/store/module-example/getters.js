@@ -15,5 +15,8 @@ export const getters = {
       }
     });
     return state.teamCards;
+  },
+  getImageServerUrl(state) {
+    return state.imageServerUrl;
   }
 };
