@@ -30,6 +30,7 @@
         v-for="(item, index) in teamCards"
         :key="index"
         v-show="!loading"
+        @click="alertMsg"
       >
         <img
           alt="example"
@@ -139,6 +140,9 @@ export default {
     },
     getCards() {
       this.$store.dispatch(T.GET_TEAM_CARDS);
+    },
+    alertMsg() {
+      this.$message.info("수정기능 개발중");
     }
   }
 };
