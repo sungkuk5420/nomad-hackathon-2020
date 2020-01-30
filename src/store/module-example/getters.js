@@ -6,7 +6,6 @@ export const getters = {
   },
   getTeamCards(state) {
     state.teamCards.map(item => {
-      console.log(item.secondPeopleName != "");
       if (item.teamType == "team") {
         item.peopleName =
           item.secondPeopleName != ""

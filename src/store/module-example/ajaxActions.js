@@ -5,14 +5,14 @@ const apiURL = "https://devkim.dev";
 
 export const ajaxActions = {
   addTeamCard(params, cSuccess, cError) {
-    console.log(params);
+    // console.log(params);
     let options = {
       url() {
         return `${apiURL}/addTeamCard`;
       }
     };
     let api = axios.create();
-    console.log("url= ", options.url());
+    // console.log("url= ", options.url());
 
     const formData = new FormData();
     formData.append("mainImage", params.addTeamCard.mainImage);
@@ -32,7 +32,7 @@ export const ajaxActions = {
           return res.status !== 200;
         });
         if (errors.length < 1) {
-          console.log("200 response= ", responses[0]);
+          // console.log("200 response= ", responses[0]);
           cSuccess(responses[0]);
         } else {
           let errmsgs = errors.reduce((memo = "", res) => {
@@ -49,13 +49,13 @@ export const ajaxActions = {
       }
     };
     let api = axios.create();
-    console.log("url= ", options.url());
+    // console.log("url= ", options.url());
     axios.all([api.get(options.url())]).then(responses => {
       let errors = responses.filter(res => {
         return res.status !== 200;
       });
       if (errors.length < 1) {
-        console.log("200 response= ", responses[0]);
+        // console.log("200 response= ", responses[0]);
         cSuccess(responses[0]);
       } else {
         let errmsgs = errors.reduce((memo = "", res) => {
