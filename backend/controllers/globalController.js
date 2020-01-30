@@ -9,14 +9,7 @@ export const addTeamCard = async (req, res) => {
   } = req;
   try {
     const addTeamCard = params.addTeamCard;
-    const insertTeamCard = await Card.create({
-      teamType: addTeamCard.teamType,
-      firstPeopleImage: addTeamCard.firstPeopleImage,
-      firstPeopleName: addTeamCard.firstPeopleName,
-      secondPeopleImage: addTeamCard.secondPeopleImage,
-      secondPeopleName: addTeamCard.secondPeopleName,
-      comment: addTeamCard.commentt
-    });
+    const insertTeamCard = await Card.create(addTeamCard);
     res.json(insertTeamCard);
     res.end();
   } catch (error) {
