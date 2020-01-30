@@ -7,10 +7,12 @@ export const getters = {
   getTeamCards(state) {
     state.teamCards.map(item => {
       console.log(item.secondPeopleName != "");
-      item.peopleName =
-        item.secondPeopleName != ""
-          ? item.firstPeopleName + ", " + item.secondPeopleName
-          : item.firstPeopleName;
+      if (item.teamType == "team") {
+        item.peopleName =
+          item.secondPeopleName != ""
+            ? item.firstPeopleName + ", " + item.secondPeopleName
+            : item.firstPeopleName;
+      }
     });
     return state.teamCards;
   }
