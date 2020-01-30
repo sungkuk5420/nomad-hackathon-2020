@@ -5,8 +5,7 @@ module.exports = function(ctx) {
   return {
     // app boot file (/src/boot)
     // --> boot files are part of "main.js"
-    boot: ["axios"],
-
+    boot: ["axios", "google-analytics"],
     css: ["app.styl"],
 
     extras: [
@@ -78,9 +77,9 @@ module.exports = function(ctx) {
       // workboxPluginMode: 'InjectManifest',
       // workboxOptions: {}, // only for NON InjectManifest
       manifest: {
-        name: '노마드해커톤',
-        short_name: '노마드해커톤',
-        description: '2020 노마드코더 해커톤 팀 리스트',
+        name: "노마드해커톤",
+        short_name: "노마드해커톤",
+        description: "2020 노마드코더 해커톤 팀 리스트",
         display: "standalone",
         orientation: "portrait",
         background_color: "#ffffff",
