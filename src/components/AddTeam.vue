@@ -123,6 +123,9 @@ export default {
   watch: {
     modalVisible(value) {
       if (value == true) {
+        this.firstLoding = false;
+        this.secondLoding = false;
+        this.buttonLoading = false;
         this.addTeamCard = {
           teamType: "alone",
           firstPeopleImage: "",
@@ -170,6 +173,7 @@ export default {
             addTeamCard,
             cb: data => {
               vueObj.firstLoding = false;
+              vueObj.buttonLoading = false;
               vueObj.$message.success("등록완료");
               vueObj.$store.dispatch(T.CHANGE_MODAL_VISIBLE);
             }
