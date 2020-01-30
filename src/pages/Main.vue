@@ -19,7 +19,13 @@
         background: '#fff',
         minHeight: '280px'
       }"
-      :class="loading ? 'overflow-hidden' : ''"
+      :class="
+        !loading && teamCards.length == 0
+          ? 'empty'
+          : loading
+          ? 'overflow-hidden'
+          : ''
+      "
     >
       <a-card
         hoverable
@@ -44,6 +50,7 @@
       </a-skeleton>
 
       <add-team></add-team>
+      <a-empty v-show="!loading && teamCards.length == 0" />
     </a-layout-content>
   </a-layout>
 </template>
@@ -93,6 +100,8 @@ export default {
     teamCards(cards) {
       if (cards.length > 0) {
         this.loading = false;
+      } else {
+        this.loading = false;
       }
     }
   },
@@ -126,6 +135,10 @@ export default {
     overflow: auto;
     &.overflow-hidden {
       overflow: hidden;
+    }
+    &.empty {
+      align-items: center;
+      justify-content: center;
     }
   }
   .header {
