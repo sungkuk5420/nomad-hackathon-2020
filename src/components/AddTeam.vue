@@ -12,7 +12,7 @@
         <a-button
           key="submit"
           type="primary"
-          :loading="firstLoding"
+          :loading="buttonLoading"
           @click="handleOk"
         >
           확인
@@ -101,8 +101,8 @@ import { T } from "../store/module-example/types";
 export default {
   data() {
     return {
-      modalLoading: false,
       visible: false,
+      buttonLoading: false,
       firstLoding: false,
       secondLoding: false,
       addTeamCard: {
@@ -120,33 +120,47 @@ export default {
       modalVisible: "getModalVisible"
     })
   },
+  watch: {
+    modalVisible(value) {
+      if (value == true) {
+        this.addTeamCard = {
+          teamType: "alone",
+          firstPeopleImage: "",
+          firstPeopleName: "",
+          secondPeopleImage: "",
+          secondPeopleName: "",
+          comment: ""
+        };
+      }
+    }
+  },
   methods: {
     handleOk(e) {
-      this.modalLoading = true;
+      this.buttonLoading = true;
       if (this.addTeamCard.firstPeopleImage == "") {
         this.$message.error("팀원 1의 이미지를 등록해주세요.");
-        this.modalLoading = false;
+        this.buttonLoading = false;
       } else if (this.addTeamCard.firstPeopleName == "") {
         this.$message.error("팀원 1의 이름을 입력해주세요.");
-        this.modalLoading = false;
+        this.buttonLoading = false;
       } else if (
         this.addTeamCard.teamType == "team" &&
         this.addTeamCard.secondPeopleImage == ""
       ) {
         this.$message.error("팀원 2의 이미지를 등록해주세요.");
-        this.modalLoading = false;
+        this.buttonLoading = false;
       } else if (
         this.addTeamCard.teamType == "team" &&
         this.addTeamCard.secondPeopleName == ""
       ) {
         this.$message.error("팀원 2의 이름을 입력해주세요.");
-        this.modalLoading = false;
+        this.buttonLoading = false;
       } else if (
         this.addTeamCard.teamType == "team" &&
         this.addTeamCard.comment == ""
       ) {
         this.$message.error("포부 한마디를 입력해주세요.");
-        this.modalLoading = false;
+        this.buttonLoading = false;
       } else {
         console.log(this.addTeamCard);
         let vueObj = this;
@@ -170,6 +184,7 @@ export default {
     firstHandleChange(info) {
       if (info.file.status === "uploading") {
         this.firstLoding = true;
+        this.buttonLoading = true;
         return;
       }
       if (info.file.status === "done") {
@@ -179,6 +194,7 @@ export default {
         getBase64(info.file.originFileObj, imageUrl => {
           this.addTeamCard.firstPeopleImage = imageUrl;
           this.firstLoding = false;
+          this.buttonLoading = false;
 
           setTimeout(() => {
             const maxHeight = Math.max(
@@ -195,6 +211,7 @@ export default {
     secondHandleChange(info) {
       if (info.file.status === "uploading") {
         this.secondLoding = true;
+        this.buttonLoading = true;
         return;
       }
       if (info.file.status === "done") {
@@ -204,6 +221,7 @@ export default {
         getBase64(info.file.originFileObj, imageUrl => {
           this.addTeamCard.secondPeopleImage = imageUrl;
           this.secondLoding = false;
+          this.buttonLoading = false;
 
           setTimeout(() => {
             const maxHeight = Math.max(
