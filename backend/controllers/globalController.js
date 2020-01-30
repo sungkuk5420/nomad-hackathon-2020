@@ -17,9 +17,9 @@ export const addTeamCard = async (req, res) => {
     body: { addTeamCard }
   } = req;
   addTeamCard = JSON.parse(addTeamCard);
-  addTeamCard.mainImage = mainImage;
-  addTeamCard.firstPeopleImage = firstPeopleImage;
-  addTeamCard.secondPeopleImage = secondPeopleImage;
+  addTeamCard.mainImage = mainImage ? mainImage : "";
+  addTeamCard.firstPeopleImage = firstPeopleImage ? firstPeopleImage : "";
+  addTeamCard.secondPeopleImage = secondPeopleImage ? secondPeopleImage : "";
   try {
     const insertTeamCard = await Card.create(addTeamCard);
     res.json(insertTeamCard);
