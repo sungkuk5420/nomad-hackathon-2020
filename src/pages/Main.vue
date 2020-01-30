@@ -41,6 +41,26 @@
           <div>{{item.firstPeopleName}}</div>
           <div v-if="item.teamType == 'team'">{{item.secondPeopleName}}</div>
         </div>
+        <div class="avatar">
+          <a-avatar size="large" icon="user" v-if="item.firstPeopleImage==''" />
+          <img
+            alt="example"
+            v-if="item.firstPeopleImage!=''"
+            :src="item.firstPeopleImage"
+            class="ant-avatar ant-avatar-lg ant-avatar-circle ant-avatar-icon"
+          />
+          <a-avatar
+            size="large"
+            icon="user"
+            v-if="item.teamType == 'team'&&item.secondPeopleImage==''"
+          />
+          <img
+            alt="example"
+            v-if="item.teamType == 'team'&&item.secondPeopleImage!=''"
+            :src="item.secondPeopleImage"
+            class="ant-avatar ant-avatar-lg ant-avatar-circle ant-avatar-icon"
+          />
+        </div>
         <a-card-meta :title="item.peopleName">
           <template slot="description">{{ item.comment }}</template>
         </a-card-meta>
@@ -131,6 +151,19 @@ export default {
   height: 100%;
 }
 #components-layout-demo-fixed {
+  .ant-card-body {
+    position: relative;
+  }
+  .avatar {
+    position: absolute;
+    top: -25px;
+    right: 5px;
+    .ant-avatar {
+      &:first-child {
+        margin-right: 5px;
+      }
+    }
+  }
   .ant-layout-content {
     height: calc(100% - 104px);
     padding-top: 50px;
