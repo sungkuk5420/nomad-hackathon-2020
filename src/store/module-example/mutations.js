@@ -8,5 +8,9 @@ export const mutations = {
   [T.GET_TEAM_CARDS](state, result) {
     console.log(`mutation [T.GET_TEAM_CARDS] ${result}`);
     state.teamCards = result;
+  },
+  [T.ADD_TEAM_CARD](state, result) {
+    console.log(`mutation [T.ADD_TEAM_CARD] ${result}`);
+    state.teamCards = [...state.teamCards, result];
   }
 };

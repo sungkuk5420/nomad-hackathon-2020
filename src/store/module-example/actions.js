@@ -13,9 +13,9 @@ export const actions = {
       results => {
         console.log(`action / ADD_TEAM_CARD / success`);
         console.log(" reults=", results);
-        commit(T.ADD_TEAM_CARD, results);
+        commit(T.ADD_TEAM_CARD, results.data);
         if (params.cb) {
-          params.cb(results);
+          params.cb();
         }
       },
       res => {

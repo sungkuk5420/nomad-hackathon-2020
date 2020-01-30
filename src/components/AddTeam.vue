@@ -168,7 +168,7 @@ export default {
         setTimeout(() => {
           this.$store.dispatch(T.ADD_TEAM_CARD, {
             addTeamCard,
-            cb: () => {
+            cb: data => {
               vueObj.firstLoding = false;
               vueObj.$message.success("등록완료");
               vueObj.$store.dispatch(T.CHANGE_MODAL_VISIBLE);
