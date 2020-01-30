@@ -5,6 +5,7 @@
       title="참가자 카드 등록"
       onOk="handleOk"
       :maskClosable="false"
+      :keyboard="false"
       v-bind:class="addTeamCard.teamType"
     >
       <template slot="footer">
