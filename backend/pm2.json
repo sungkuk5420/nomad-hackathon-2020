@@ -1,0 +1,9 @@
+{
+    "apps": [
+        {
+            "name": "nomadhackaton2020",
+            "script": "npm",
+            "args" : "start"
+        }
+    ]
+}
