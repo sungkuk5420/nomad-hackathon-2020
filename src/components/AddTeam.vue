@@ -9,25 +9,38 @@
     >
       <template slot="footer">
         <a-button key="back" @click="handleCancel">취소</a-button>
-        <a-button
-          key="submit"
-          type="primary"
-          :loading="buttonLoading"
-          @click="handleOk"
-        >
-          확인
-        </a-button>
+        <a-button key="submit" type="primary" :loading="buttonLoading" @click="handleOk">확인</a-button>
       </template>
-      <a-radio-group
-        defaultValue="alone"
-        buttonStyle="solid"
-        v-model="addTeamCard.teamType"
-      >
-        <a-radio-button value="alone">개인</a-radio-button>
-        <a-radio-button value="team">팀</a-radio-button>
-      </a-radio-group>
+      <div class="main">
+        <div class="center-label">메인 이미지</div>
+        <div class="main__image">
+          <a-upload
+            name="avatar"
+            listType="picture-card"
+            class="avatar-uploader"
+            :showUploadList="false"
+            action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
+            :beforeUpload="beforeUpload"
+            @change="mainHandleChange"
+          >
+            <img v-if="addTeamCard.mainImage" :src="addTeamCard.mainImage" alt="avatar" />
+            <div v-else>
+              <a-icon :type="mainLoding ? 'loading' : 'plus'" />
+              <div class="ant-upload-text">Upload</div>
+            </div>
+          </a-upload>
+        </div>
+      </div>
+      <div class="center-label">
+        <a-radio-group defaultValue="alone" buttonStyle="solid" v-model="addTeamCard.teamType">
+          <a-radio-button value="alone">개인</a-radio-button>
+          <a-radio-button value="team">팀</a-radio-button>
+        </a-radio-group>
+      </div>
       <div class="flex justify-cendter">
         <div class="people">
+          <div class="center-label" v-show="addTeamCard.teamType == 'team'">팀원 1</div>
+          <div class="center-label" v-show="addTeamCard.teamType == 'alone'">프로필 이미지</div>
           <div class="people__image" ref="firstPeople">
             <a-upload
               name="avatar"
@@ -49,12 +62,10 @@
               </div>
             </a-upload>
           </div>
-          <a-input
-            placeholder="참가자 1 이름"
-            v-model="addTeamCard.firstPeopleName"
-          />
+          <a-input placeholder="참가자 1 이름" v-model="addTeamCard.firstPeopleName" />
         </div>
         <div class="people" v-show="addTeamCard.teamType == 'team'">
+          <div class="center-label">팀원 2</div>
           <div class="people__image" ref="secondPeople">
             <a-upload
               name="avatar"
@@ -76,15 +87,13 @@
               </div>
             </a-upload>
           </div>
-          <a-input
-            placeholder="참가자 2 이름"
-            v-model="addTeamCard.secondPeopleName"
-          />
+          <a-input placeholder="참가자 2 이름" v-model="addTeamCard.secondPeopleName" />
         </div>
-        <a-input
+        <a-input style="margin-top:10px;" placeholder="포부 한마디" v-model="addTeamCard.comment" />
+        <a-input-password
           style="margin-top:10px;"
-          placeholder="포부 한마디"
-          v-model="addTeamCard.comment"
+          placeholder="수정, 삭제 패스워드"
+          v-model="addTeamCard.password"
         />
       </div>
     </a-modal>
@@ -103,15 +112,18 @@ export default {
     return {
       visible: false,
       buttonLoading: false,
+      mainLoding: false,
       firstLoding: false,
       secondLoding: false,
       addTeamCard: {
         teamType: "alone",
+        mainImage: "",
         firstPeopleImage: "",
         firstPeopleName: "",
         secondPeopleImage: "",
         secondPeopleName: "",
-        comment: ""
+        comment: "",
+        password: ""
       }
     };
   },
@@ -123,11 +135,13 @@ export default {
   watch: {
     modalVisible(value) {
       if (value == true) {
+        this.mainLoding = false;
         this.firstLoding = false;
         this.secondLoding = false;
         this.buttonLoading = false;
         this.addTeamCard = {
           teamType: "alone",
+          mainImage: "",
           firstPeopleImage: "",
           firstPeopleName: "",
           secondPeopleImage: "",
@@ -140,17 +154,8 @@ export default {
   methods: {
     handleOk(e) {
       this.buttonLoading = true;
-      if (this.addTeamCard.firstPeopleImage == "") {
-        this.$message.error("팀원 1의 이미지를 등록해주세요.");
-        this.buttonLoading = false;
-      } else if (this.addTeamCard.firstPeopleName == "") {
+      if (this.addTeamCard.firstPeopleName == "") {
         this.$message.error("팀원 1의 이름을 입력해주세요.");
-        this.buttonLoading = false;
-      } else if (
-        this.addTeamCard.teamType == "team" &&
-        this.addTeamCard.secondPeopleImage == ""
-      ) {
-        this.$message.error("팀원 2의 이미지를 등록해주세요.");
         this.buttonLoading = false;
       } else if (
         this.addTeamCard.teamType == "team" &&
@@ -184,6 +189,21 @@ export default {
     },
     handleCancel(e) {
       this.$store.dispatch(T.CHANGE_MODAL_VISIBLE);
+    },
+    mainHandleChange(info) {
+      if (info.file.status === "uploading") {
+        this.mainLoding = true;
+        this.buttonLoading = true;
+        return;
+      }
+      if (info.file.status === "done") {
+        // Get this url from response in real world.
+        getBase64(info.file.originFileObj, imageUrl => {
+          this.addTeamCard.mainImage = imageUrl;
+          this.mainLoding = false;
+          this.buttonLoading = false;
+        });
+      }
     },
     firstHandleChange(info) {
       if (info.file.status === "uploading") {
@@ -253,6 +273,17 @@ export default {
 <style lang="scss">
 .ant-modal-close-x {
   display: none;
+}
+.center-label {
+  width: 100%;
+  text-align: center;
+}
+.main {
+  width: 100%;
+  &__image {
+    display: flex;
+    justify-content: center;
+  }
 }
 .avatar-uploader {
   img {

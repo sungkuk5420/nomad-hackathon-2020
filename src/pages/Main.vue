@@ -1,15 +1,12 @@
 <template>
   <a-layout id="components-layout-demo-fixed">
-    <a-layout-header
-      :style="{ position: 'fixed', zIndex: 1, width: '100%' }"
-      class="header"
-    >
+    <a-layout-header :style="{ position: 'fixed', zIndex: 1, width: '100%' }" class="header">
       <div class="header__logo">
-        <img src="~assets/logo.png" alt="" />
+        <img src="~assets/logo.png" alt />
       </div>
       <h1 class="header__title">
-        <span>노마드코더 2020 해커톤 참가 팀 목록 </span
-        ><a-button @click="showModal">팀 등록</a-button>
+        <span>노마드코더 2020 해커톤 참가 팀 목록</span>
+        <a-button @click="showModal">팀 등록</a-button>
       </h1>
     </a-layout-header>
     <a-layout-content
@@ -34,7 +31,16 @@
         :key="index"
         v-show="!loading"
       >
-        <img alt="example" :src="item.firstPeopleImage" slot="cover" />
+        <img
+          alt="example"
+          v-if="item.mainImage&&item.mainImage!=''"
+          :src="item.mainImage"
+          slot="cover"
+        />
+        <div class="main-image-text" v-if="!item.mainImage||item.mainImage==''" slot="cover">
+          <div>{{item.firstPeopleName}}</div>
+          <div v-if="item.teamType == 'team'">{{item.secondPeopleName}}</div>
+        </div>
         <a-card-meta :title="item.peopleName">
           <template slot="description">{{ item.comment }}</template>
         </a-card-meta>
@@ -46,8 +52,7 @@
         class="card-skeleton ant-card profile-card ant-card-bordered"
         v-for="(item, index) in skeletonArr"
         :key="index"
-      >
-      </a-skeleton>
+      ></a-skeleton>
 
       <add-team></add-team>
       <a-empty v-show="!loading && teamCards.length == 0" />
@@ -163,18 +168,32 @@ export default {
     }
   }
   .profile-card {
-    max-width: 240px;
     flex: none;
+    width: 250px;
     height: 345px;
     margin-bottom: 20px;
     &:not(:last-child) {
       margin-right: 20px;
     }
-    .ant-card-cover {
-      max-height: 250px;
+    .ant-card-cover,
+    .main-image-text {
+      display: flex;
+      align-items: center;
+      flex: none;
+      height: 250px;
       overflow: hidden;
-
+      border-bottom: 1px solid #ddd;
+      background: #001529;
       img {
+      }
+    }
+    .main-image-text {
+      flex-direction: column;
+      justify-content: center;
+      & > div {
+        color: white;
+        font-size: 24px;
+        font-weight: bold;
       }
     }
   }
