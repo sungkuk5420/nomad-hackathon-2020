@@ -1,3 +1,4 @@
 export default {
-  loadingState: false
+  loadingState: false,
+  modalVisible:false
 };
