@@ -33,5 +33,28 @@ export const ajaxActions = {
           console.warn(errmsgs);
         }
       });
+  },
+  getTeamCards(cSuccess, cError) {
+    let options = {
+      url() {
+        return `${apiURL}/getTeamCards`;
+      }
+    };
+    let api = axios.create();
+    console.log("url= ", options.url());
+    axios.all([api.get(options.url())]).then(responses => {
+      let errors = responses.filter(res => {
+        return res.status !== 200;
+      });
+      if (errors.length < 1) {
+        console.log("200 response= ", responses[0]);
+        cSuccess(responses[0]);
+      } else {
+        let errmsgs = errors.reduce((memo = "", res) => {
+          return memo + `${res.status} : ${res.message} \n`;
+        }, "");
+        console.warn(errmsgs);
+      }
+    });
   }
 };

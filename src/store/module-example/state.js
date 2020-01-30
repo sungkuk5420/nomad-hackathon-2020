@@ -1,4 +1,5 @@
 export default {
   loadingState: false,
-  modalVisible:false
+  modalVisible: false,
+  teamCards: []
 };

@@ -22,5 +22,18 @@ export const actions = {
         console.log(`action / ADD_TEAM_CARD / error`, res);
       }
     );
+  },
+  [T.GET_TEAM_CARDS]({ commit }) {
+    console.log(`store action [T.GET_TEAM_CARDS] `);
+    ajaxActions.getTeamCards(
+      results => {
+        console.log(`action / GET_TEAM_CARDS / success`);
+        console.log(" reults=", results);
+        commit(T.GET_TEAM_CARDS, results.data);
+      },
+      res => {
+        console.log(`action / GET_TEAM_CARDS / error`, res);
+      }
+    );
   }
 };
