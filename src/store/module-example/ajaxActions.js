@@ -1,7 +1,7 @@
 import axios from "axios";
 
-// const apiURL = "http://localhost:4000";
-const apiURL = "http://54.64.84.165:4000";
+const apiURL = "http://localhost:4000";
+// const apiURL = "https://devkim.dev";
 
 export const ajaxActions = {
   addTeamCard(params, cSuccess, cError) {
