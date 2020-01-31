@@ -1,6 +1,5 @@
 export default {
   logEvent(category, action, label, sessionId = null) {
-    window.dataLayer = window.dataLayer || [];
     dataLayer.push({
       appEventCategory: category,
       appEventAction: action,
@@ -11,7 +10,6 @@ export default {
   },
 
   logPage(path, name, sessionId = null) {
-    window.dataLayer = window.dataLayer || [];
     dataLayer.push({
       screenPath: path,
       screenName: name,
