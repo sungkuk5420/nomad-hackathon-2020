@@ -11,6 +11,8 @@ export const getters = {
           item.secondPeopleName != ""
             ? item.firstPeopleName + ", " + item.secondPeopleName
             : item.firstPeopleName;
+      } else {
+        item.peopleName = item.firstPeopleName;
       }
     });
     return state.teamCards;
