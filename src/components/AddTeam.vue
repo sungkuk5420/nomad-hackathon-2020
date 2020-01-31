@@ -207,10 +207,7 @@ export default {
       ) {
         this.$message.error("팀원 2의 이름을 입력해주세요.");
         this.buttonLoading = false;
-      } else if (
-        this.addTeamCard.teamType == "team" &&
-        this.addTeamCard.comment == ""
-      ) {
+      } else if (this.addTeamCard.comment == "") {
         this.$message.error("포부 한마디를 입력해주세요.");
         this.buttonLoading = false;
       } else if (this.addTeamCard.password == "") {
@@ -244,10 +241,7 @@ export default {
       ) {
         this.$message.error("팀원 2의 이름을 입력해주세요.");
         this.buttonLoading = false;
-      } else if (
-        this.addTeamCard.teamType == "team" &&
-        this.addTeamCard.comment == ""
-      ) {
+      } else if (this.addTeamCard.comment == "") {
         this.$message.error("포부 한마디를 입력해주세요.");
         this.buttonLoading = false;
       } else if (this.addTeamCard.password == "") {
