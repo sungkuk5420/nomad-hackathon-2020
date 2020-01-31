@@ -213,6 +213,9 @@ export default {
       ) {
         this.$message.error("포부 한마디를 입력해주세요.");
         this.buttonLoading = false;
+      } else if (this.addTeamCard.password == "") {
+        this.$message.error("수정 / 삭제를 위한 비밀번호를 입력해주세요.");
+        this.buttonLoading = false;
       } else {
         let vueObj = this;
         let addTeamCard = this.addTeamCard;
@@ -246,6 +249,9 @@ export default {
         this.addTeamCard.comment == ""
       ) {
         this.$message.error("포부 한마디를 입력해주세요.");
+        this.buttonLoading = false;
+      } else if (this.addTeamCard.password == "") {
+        this.$message.error("수정 / 삭제를 위한 비밀번호를 입력해주세요.");
         this.buttonLoading = false;
       } else {
         let vueObj = this;
