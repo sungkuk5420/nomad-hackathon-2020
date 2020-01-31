@@ -5,7 +5,7 @@ module.exports = function(ctx) {
   return {
     // app boot file (/src/boot)
     // --> boot files are part of "main.js"
-    boot: ["axios", "google-analytics", { path: "gmtplugin", server: false }],
+    boot: ["axios", "google-analytics", { path: "gtmplugin", server: false }],
     css: ["app.styl"],
 
     extras: [
@@ -45,7 +45,7 @@ module.exports = function(ctx) {
       directives: ["Ripple"],
 
       // Quasar plugins
-      plugins: ["Notify", "gtmplugin"]
+      plugins: ["Notify"]
     },
 
     supportIE: true,

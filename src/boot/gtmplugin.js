@@ -1,4 +1,4 @@
-import gtm from "src/components/gtm";
+import gtm from "./gtm";
 
 export default ({ router }) => {
   router.afterEach((to, from) => {
