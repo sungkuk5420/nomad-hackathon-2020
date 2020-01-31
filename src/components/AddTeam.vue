@@ -166,7 +166,8 @@ export default {
           firstPeopleName: updateTeamCard.firstPeopleName,
           secondPeopleImage: updateTeamCard.secondPeopleImage,
           secondPeopleName: updateTeamCard.secondPeopleName,
-          comment: updateTeamCard.comment
+          comment: updateTeamCard.comment,
+          password: ""
         };
       }
     },
@@ -186,7 +187,8 @@ export default {
           firstPeopleName: "",
           secondPeopleImage: "",
           secondPeopleName: "",
-          comment: ""
+          comment: "",
+          password: ""
         };
       } else if (value == false) {
         this.$store.dispatch(T.INSERT_TEAM_CARD_DATA, {
