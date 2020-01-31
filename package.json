@@ -15,8 +15,10 @@
     "@quasar/extras": "^1.0.0",
     "ant-design-vue": "^1.4.9",
     "axios": "^0.18.1",
+    "global": "^4.4.0",
     "moment": "^2.24.0",
     "quasar": "^1.0.0",
+    "quasar-cli": "^0.17.26",
     "vant": "^2.2.5"
   },
   "devDependencies": {
