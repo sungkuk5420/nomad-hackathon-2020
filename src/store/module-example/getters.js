@@ -17,5 +17,8 @@ export const getters = {
   },
   getImageServerUrl(state) {
     return state.imageServerUrl;
+  },
+  getUpdateTeamCardData(state) {
+    return state.updateTeamCardData;
   }
 };

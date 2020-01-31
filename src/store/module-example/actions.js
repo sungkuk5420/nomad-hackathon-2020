@@ -35,5 +35,45 @@ export const actions = {
         // console.log(`action / GET_TEAM_CARDS / error`, res);
       }
     );
+  },
+  [T.INSERT_TEAM_CARD_DATA]({ commit }, params) {
+    // console.log(`store action [T.UPDATE_TEAM_CARD] `);
+    commit(T.INSERT_TEAM_CARD_DATA, params.insertTeamCardData);
+    if (params.cb) {
+      params.cb();
+    }
+  },
+  [T.CHECK_UPDATE_PASSWORD]({ commit }, params) {
+    // console.log(`store action [T.CHECK_UPDATE_PASSWORD] `);
+    ajaxActions.checkPassword(
+      params,
+      results => {
+        // console.log(`action / CHECK_UPDATE_PASSWORD / success`);
+        // console.log(" reults=", results);
+        if (params.cb) {
+          params.cb(results.data);
+        }
+      },
+      res => {
+        // console.log(`action / UPDATE_TEAM_CARD / error`, res);
+      }
+    );
+  },
+  [T.UPDATE_TEAM_CARD]({ commit }, params) {
+    // console.log(`store action [T.UPDATE_TEAM_CARD] `);
+    ajaxActions.updateTeamCard(
+      params,
+      results => {
+        // console.log(`action / UPDATE_TEAM_CARD / success`);
+        // console.log(" reults=", results);
+        commit(T.UPDATE_TEAM_CARD, results.data);
+        if (params.cb) {
+          params.cb();
+        }
+      },
+      res => {
+        // console.log(`action / UPDATE_TEAM_CARD / error`, res);
+      }
+    );
   }
 };
