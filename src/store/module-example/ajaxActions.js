@@ -107,7 +107,7 @@ export const ajaxActions = {
     // console.log("url= ", options.url());
 
     const formData = new FormData();
-    formData.append("mainImage", params.updateTeamCard);
+    formData.append("mainImage", params.updateTeamCard.mainImage);
     formData.append("firstPeopleImage", params.updateTeamCard.firstPeopleImage);
     formData.append(
       "secondPeopleImage",
