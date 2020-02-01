@@ -82,6 +82,7 @@
           </div>
           <a-input placeholder="참가자 2 이름" v-model="addTeamCard.secondPeopleName" />
         </div>
+        <a-input style="margin-top:10px;" placeholder="팀명" v-model="addTeamCard.teamName" />
         <a-input style="margin-top:10px;" placeholder="포부 한마디" v-model="addTeamCard.comment" />
         <a-input-password
           style="margin-top:10px;"
@@ -118,6 +119,7 @@ export default {
         firstPeopleName: "",
         secondPeopleImage: "",
         secondPeopleName: "",
+        teamName: "",
         comment: "",
         password: ""
       }
@@ -145,6 +147,7 @@ export default {
           firstPeopleName: "",
           secondPeopleImage: "",
           secondPeopleName: "",
+          teamName: "",
           comment: ""
         };
       }
@@ -167,6 +170,11 @@ export default {
         this.addTeamCard.comment == ""
       ) {
         this.$message.error("포부 한마디를 입력해주세요.");
+        this.buttonLoading = false;
+      } else if (
+        this.addTeamCard.teamName == ""
+      ) {
+        this.$message.error("팀명을 입력해주세요.");
         this.buttonLoading = false;
       } else {
         console.log(this.addTeamCard);
