@@ -174,6 +174,7 @@ $hover-color: #d5a009;
 }
 .ant-layout {
   height: 100%;
+  background: linear-gradient(#212121, #1F1F1F);
 }
 #components-layout-demo-fixed {
   .ant-tag {
@@ -205,6 +206,7 @@ $hover-color: #d5a009;
     flex: none;
     flex-wrap: wrap;
     overflow: auto;
+    background-color: unset !important;
     &.overflow-hidden {
       overflow: hidden;
     }
