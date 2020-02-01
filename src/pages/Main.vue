@@ -5,7 +5,8 @@
         <img src="~assets/logo.png" alt />
       </div>
       <div class="header__bi">
-        <img src="~assets/hackathon-bi.jpg" alt />
+        <img src="~assets/hackathon-bi.jpg" alt class="pc"/>
+        <img src="~assets/hackathon-bi-mobile.jpg" alt class="mobile"/>
       </div>
       <div class="header__menu">
         <ul>
@@ -40,18 +41,20 @@
         @click="showModalUpdate(item)"
       >
         <a-tag color="blue" slot="cover">{{item.teamType=='alone'?'개인':'팀'}}</a-tag>
-        <img
-          alt="example"
+        <div
+          class="main-image"
           v-if="item.mainImage&&item.mainImage!=''"
-          :src="imageServerUrl+item.mainImage"
+          :style="{ backgroundImage: `url('${imageServerUrl+item.mainImage}')` }"
           slot="cover"
-        />
+        >
+        </div>
         <div class="main-image-text" v-if="!item.mainImage||item.mainImage==''" slot="cover">
           <div>{{item.firstPeopleName}}</div>
           <div v-if="item.teamType == 'team'">{{item.secondPeopleName}}</div>
         </div>
         <div class="avatar">
-          <a-avatar size="large" icon="user" v-if="item.firstPeopleImage==''" />
+          <a-avatar size="large" v-if="item.firstPeopleImage==''" >
+          </a-avatar>
           <img
             alt="example"
             v-if="item.firstPeopleImage!=''"
@@ -60,9 +63,9 @@
           />
           <a-avatar
             size="large"
-            icon="user"
             v-if="item.teamType == 'team'&&item.secondPeopleImage==''"
-          />
+          >
+          </a-avatar>
           <img
             alt="example"
             v-if="item.teamType == 'team'&&item.secondPeopleImage!=''"
@@ -231,6 +234,8 @@ $hover-color: #d5a009;
         z-index: 1;
         border: 4px solid $main-color;
       }
+      background: url("../assets/user-default.png");
+      background-size: cover;
     }
     img {
       width: 70px;
@@ -243,6 +248,7 @@ $hover-color: #d5a009;
   }
   .ant-card-meta-title{
     margin: 0;
+    font-size: 1.5rem;
     color: #f6ce19 !important;
   }
   .ant-card-meta-people-name{
@@ -253,6 +259,7 @@ $hover-color: #d5a009;
     white-space: nowrap;
     text-overflow: ellipsis;
     color: #A3A3A5;
+    margin-bottom: 12px;
   }
   .ant-layout-content {
     height: calc(100% - 104px);
@@ -328,6 +335,10 @@ $hover-color: #d5a009;
     background-color: #0b0b0e;
     border: 1px solid #3c3939;
 
+    .main-image{
+      height: 250px;
+      background-size:100% 100%;
+    }
     &:not(:last-child) {
       margin-right: 20px;
     }
@@ -384,6 +395,42 @@ $hover-color: #d5a009;
 
 .profile-card {
   width: calc(100% / 1 - 20px);
+}
+#components-layout-demo-fixed{
+  .header__bi {
+    img.pc{
+      display: none;
+    }
+    img.mobile{
+    margin-left: 0;
+      display: inline-flex;
+    }
+  }
+  .header__menu{
+    ul{
+      li{
+        &:not(:first-child){
+          display: none;
+        }
+      }
+    }
+  }
+}
+
+/* Tablet Device */
+@media all and (min-width:481px){
+  //모바일 이외에 모든 해상도 공통
+  
+  #components-layout-demo-fixed .header__bi {
+    flex: 1;
+    overflow: initial;
+    img.pc{
+      display: inline-flex;
+    }
+    img.mobile{
+      display: none;
+    }
+  }
 }
 
 /* Tablet Device */
