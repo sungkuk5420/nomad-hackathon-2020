@@ -11,11 +11,16 @@ export const getters = {
           item.secondPeopleName != ""
             ? item.firstPeopleName + ", " + item.secondPeopleName
             : item.firstPeopleName;
+      } else {
+        item.peopleName = item.firstPeopleName;
       }
     });
     return state.teamCards;
   },
   getImageServerUrl(state) {
     return state.imageServerUrl;
+  },
+  getUpdateTeamCardData(state) {
+    return state.updateTeamCardData;
   }
 };

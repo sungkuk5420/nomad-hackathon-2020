@@ -37,7 +37,7 @@
         v-for="(item, index) in teamCards"
         :key="'profile-card'+index"
         v-show="!loading"
-        @click="alertMsg"
+        @click="showModalUpdate(item)"
       >
         <a-tag color="blue" slot="cover">{{item.teamType=='alone'?'개인':'팀'}}</a-tag>
         <img
@@ -146,6 +146,15 @@ export default {
   methods: {
     showModal() {
       this.$store.dispatch(T.CHANGE_MODAL_VISIBLE);
+    },
+    showModalUpdate(teamCardData) {
+      const insertTeamCardData = teamCardData;
+      this.$store.dispatch(T.INSERT_TEAM_CARD_DATA, {
+        insertTeamCardData,
+        cb: () => {
+          this.$store.dispatch(T.CHANGE_MODAL_VISIBLE);
+        }
+      });
     },
     getCards() {
       this.$store.dispatch(T.GET_TEAM_CARDS);

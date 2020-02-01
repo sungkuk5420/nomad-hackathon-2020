@@ -8,10 +8,6 @@
       :keyboard="false"
       v-bind:class="addTeamCard.teamType"
     >
-      <template slot="footer">
-        <a-button key="back" @click="handleCancel">취소</a-button>
-        <a-button key="submit" type="primary" :loading="buttonLoading" @click="handleOk">확인</a-button>
-      </template>
       <div class="main">
         <div class="center-label">메인 이미지</div>
         <div class="main__image">
@@ -90,6 +86,23 @@
           v-model="addTeamCard.password"
         />
       </div>
+      <template slot="footer">
+        <a-button key="back" @click="handleCancel">취소</a-button>
+        <a-button
+          key="submit"
+          type="primary"
+          :loading="buttonLoading"
+          v-show="updateTeamCardData === null"
+          @click="handleOk"
+        >확인</a-button>
+        <a-button
+          key="update"
+          type="primary"
+          :loading="buttonLoading"
+          v-show="updateTeamCardData !== null"
+          @click="handleUpdate"
+        >수정</a-button>
+      </template>
     </a-modal>
   </div>
 </template>
@@ -127,12 +140,41 @@ export default {
   },
   computed: {
     ...mapGetters({
-      modalVisible: "getModalVisible"
+      modalVisible: "getModalVisible",
+      imageServerUrl: "getImageServerUrl",
+      updateTeamCardData: "getUpdateTeamCardData"
     })
   },
   watch: {
+    updateTeamCardData(updateTeamCard) {
+      if (updateTeamCard != null) {
+        this.mainImagePreview =
+          updateTeamCard.mainImage != ""
+            ? this.imageServerUrl + updateTeamCard.mainImage
+            : updateTeamCard.mainImage;
+        this.firstPeopleImagePreview =
+          updateTeamCard.firstPeopleImage != ""
+            ? this.imageServerUrl + updateTeamCard.firstPeopleImage
+            : updateTeamCard.firstPeopleImage;
+        this.secondPeopleImagePreview =
+          updateTeamCard.secondPeopleImage != ""
+            ? this.imageServerUrl + updateTeamCard.secondPeopleImage
+            : updateTeamCard.secondPeopleImage;
+        this.addTeamCard = {
+          _id: updateTeamCard._id,
+          teamType: updateTeamCard.teamType,
+          mainImage: updateTeamCard.mainImage,
+          firstPeopleImage: updateTeamCard.firstPeopleImage,
+          firstPeopleName: updateTeamCard.firstPeopleName,
+          secondPeopleImage: updateTeamCard.secondPeopleImage,
+          secondPeopleName: updateTeamCard.secondPeopleName,
+          comment: updateTeamCard.comment,
+          password: ""
+        };
+      }
+    },
     modalVisible(value) {
-      if (value == true) {
+      if (this.updateTeamCardData == null && value == true) {
         this.mainLoding = false;
         this.firstLoding = false;
         this.secondLoding = false;
@@ -150,12 +192,16 @@ export default {
           teamName: "",
           comment: ""
         };
+      } else if (value == false) {
+        this.$store.dispatch(T.INSERT_TEAM_CARD_DATA, {
+          insertTeamCardData: null
+        });
       }
     }
   },
   methods: {
     handleOk(e) {
-      // this.buttonLoading = true;
+      this.buttonLoading = true;
       if (this.addTeamCard.firstPeopleName == "") {
         this.$message.error("팀원 1의 이름을 입력해주세요.");
         this.buttonLoading = false;
@@ -165,19 +211,17 @@ export default {
       ) {
         this.$message.error("팀원 2의 이름을 입력해주세요.");
         this.buttonLoading = false;
-      } else if (
-        this.addTeamCard.teamType == "team" &&
-        this.addTeamCard.comment == ""
-      ) {
+      } else if (this.addTeamCard.comment == "") {
         this.$message.error("포부 한마디를 입력해주세요.");
         this.buttonLoading = false;
       } else if (
         this.addTeamCard.teamName == ""
       ) {
         this.$message.error("팀명을 입력해주세요.");
+      } else if (this.addTeamCard.password == "") {
+        this.$message.error("수정 / 삭제를 위한 비밀번호를 입력해주세요.");
         this.buttonLoading = false;
       } else {
-        console.log(this.addTeamCard);
         let vueObj = this;
         let addTeamCard = this.addTeamCard;
         setTimeout(() => {
@@ -191,6 +235,53 @@ export default {
             }
           });
           this;
+        }, 500);
+      }
+    },
+    handleUpdate(e) {
+      this.buttonLoading = true;
+      if (this.addTeamCard.firstPeopleName == "") {
+        this.$message.error("팀원 1의 이름을 입력해주세요.");
+        this.buttonLoading = false;
+      } else if (
+        this.addTeamCard.teamType == "team" &&
+        this.addTeamCard.secondPeopleName == ""
+      ) {
+        this.$message.error("팀원 2의 이름을 입력해주세요.");
+        this.buttonLoading = false;
+      } else if (this.addTeamCard.comment == "") {
+        this.$message.error("포부 한마디를 입력해주세요.");
+        this.buttonLoading = false;
+      }  else if (
+        this.addTeamCard.teamName == ""
+      ) {
+        this.$message.error("팀명을 입력해주세요.");
+      } else if (this.addTeamCard.password == "") {
+        this.$message.error("수정 / 삭제를 위한 비밀번호를 입력해주세요.");
+        this.buttonLoading = false;
+      }  {
+        let vueObj = this;
+        let addTeamCard = this.addTeamCard;
+        setTimeout(() => {
+          this.$store.dispatch(T.CHECK_UPDATE_PASSWORD, {
+            addTeamCard,
+            cb: isPasswordOk => {
+              if (!isPasswordOk) {
+                vueObj.$message.error("패스워드가 일치하지 않습니다.");
+                vueObj.buttonLoading = false;
+              } else {
+                vueObj.$store.dispatch(T.UPDATE_TEAM_CARD, {
+                  updateTeamCard: addTeamCard,
+                  cb: data => {
+                    vueObj.firstLoding = false;
+                    vueObj.buttonLoading = false;
+                    vueObj.$message.success("수정완료");
+                    vueObj.$store.dispatch(T.CHANGE_MODAL_VISIBLE);
+                  }
+                });
+              }
+            }
+          });
         }, 500);
       }
     },

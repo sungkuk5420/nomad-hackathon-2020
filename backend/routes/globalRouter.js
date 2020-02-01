@@ -12,9 +12,16 @@ multer.diskStorage({
 const uploader = multer({
   dest: "../backend/public/cardImages/"
 });
-import { addTeamCard, getTeamCards } from "../controllers/globalController";
+import {
+  addTeamCard,
+  getTeamCards,
+  checkPassword,
+  updateTeamCard
+} from "../controllers/globalController";
 
 globalRouter.post("/addTeamCard", uploader.any(), addTeamCard);
 globalRouter.get("/getTeamCards", getTeamCards);
+globalRouter.post("/checkPassword", checkPassword);
+globalRouter.post("/updateTeamCard", uploader.any(), updateTeamCard);
 
 export default globalRouter;
