@@ -4,10 +4,17 @@
       <div class="header__logo">
         <img src="~assets/logo.png" alt />
       </div>
-      <h1 class="header__title">
-        <span>노마드코더 2020 해커톤 참가 팀 목록</span>
-        <a-button @click="showModal">팀 등록</a-button>
-      </h1>
+      <div class="header__bi">
+        <img src="~assets/hackathon-bi.jpg" alt />
+      </div>
+      <div class="header__menu">
+        <ul>
+          <li><a-button @click="showModal"><i class="material-icons">add</i>팀 등록</a-button></li>
+          <li><a href="https://festa.io/events/885/" target="_blank">Join Us</a></li>
+          <li><a href="https://www.youtube.com/channel/UCUpJs89fSBXNolQGOYKn0YQ?" target="_blank">Youtube</a></li>
+          <li><a href="https://www.instagram.com/nomad_coders/" target="_blank">instagram</a></li>
+        </ul>
+      </div>
     </a-layout-header>
     <a-layout-content
       :style="{
@@ -150,8 +157,20 @@ export default {
 };
 </script>
 <style lang="scss">
+$main-color: #F6CE19;
+$hover-color: #d5a009;
+
+@mixin nomad-btn() {
+  background-color: $main-color;
+  border-radius: 20px;
+  color: #000000;
+  border-style: none;
+  padding:0 20px 0 12px;
+}
+
 .ant-layout-header {
   padding: 0 20px;
+  height: 70px;
 }
 .ant-layout {
   height: 100%;
@@ -196,22 +215,52 @@ export default {
   }
   .header {
     display: flex;
+    background: #000000;
+    justify-content: space-between;
     &__logo {
+      flex: 1;
       img {
         width: auto;
         height: 40px;
       }
     }
-    &__title {
-      margin: 0;
-      padding-left: 20px;
-      display: flex;
-      align-items: center;
-      font-size: 20px;
-      color: white;
-      width: 100%;
-      .ant-btn {
-        margin-left: auto;
+    &__bi {
+      flex: 1;
+      img {
+        width: auto;
+        margin-left: 60px;
+      }
+    }
+    &__menu {  
+      flex: 1;
+      ul {
+        display: flex;   
+        height: 100%;
+        justify-content: flex-end;
+        align-items: center;
+        li {
+          & ~ li {
+            margin-left: 20px;
+          }
+          .ant-btn {
+            @include nomad-btn();
+            &:hover {
+              background-color: $hover-color;
+            }
+            i {
+              margin-right: 10px;
+              font-size: 1rem;
+            }
+          } 
+          a {
+            color: $main-color;
+            font-weight: 600;
+            font-size:1rem;
+            &:hover {
+              color: $hover-color;
+            }
+          }
+        }
       }
     }
   }
