@@ -188,6 +188,17 @@ $hover-color: #d5a009;
   }
   .ant-card-body {
     position: relative;
+
+    .ant-card-meta-detail {
+      text-align: center;
+
+      .ant-card-meta-title {
+        color: #A3A3A5;
+      }
+      .ant-card-meta-description {
+        color: #ffffff;
+      }
+    }
   }
   .avatar {
     position: absolute;
@@ -271,7 +282,7 @@ $hover-color: #d5a009;
     width: calc(100% / 6 - 20px;);
     margin-bottom: 20px;
     border-radius: 20px;
-    background-color: #202125;
+    background-color: #0b0b0e;
     border: 1px solid #3c3939;
 
     &:not(:last-child) {
@@ -282,12 +293,15 @@ $hover-color: #d5a009;
       border-radius: 20px 20px 0 0;
       display: flex;
       align-items: center;
+      justify-content: center;
       flex: none;
       height: 250px;
       overflow: hidden;
       border-bottom: 1px solid #3c3939;
       background: #001529;
       img {
+        width: auto;
+        height: 100%;
       }
     }
     .main-image-text {
