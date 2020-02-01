@@ -337,7 +337,8 @@ $hover-color: #d5a009;
 
     .main-image{
       height: 250px;
-      background-size:100% 100%;
+      background-size:cover;
+      background-position: center center;
     }
     &:not(:last-child) {
       margin-right: 20px;
