@@ -268,20 +268,24 @@ $hover-color: #d5a009;
   }
   .profile-card {
     flex: none;
-    width: 250px;
-    height: 345px;
+    width: calc(100% / 6 - 20px;);
     margin-bottom: 20px;
+    border-radius: 20px;
+    background-color: #202125;
+    border: 1px solid #3c3939;
+
     &:not(:last-child) {
       margin-right: 20px;
     }
     .ant-card-cover,
     .main-image-text {
+      border-radius: 20px 20px 0 0;
       display: flex;
       align-items: center;
       flex: none;
       height: 250px;
       overflow: hidden;
-      border-bottom: 1px solid #ddd;
+      border-bottom: 1px solid #3c3939;
       background: #001529;
       img {
       }
