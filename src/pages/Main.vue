@@ -323,7 +323,6 @@ $hover-color: #d5a009;
   }
   .profile-card {
     flex: none;
-    width: calc(100% / 6 - 20px);
     margin-bottom: 20px;
     border-radius: 20px;
     background-color: #0b0b0e;
@@ -378,5 +377,37 @@ $hover-color: #d5a009;
       }
     }
   }
+  
+}
+/* Mobile Device */
+//768px 미만 해상도의 모바일 기기를 위한 코드를 작성한다. 모든 해상도에서 이 코드가 실행됨. 미디어 쿼리를 지원하지 않는 모바일 기기를 위해 미디어 쿼리 구문을 사용하지 않는다.
+
+.profile-card {
+  width: calc(100% / 1 - 20px);
+}
+
+/* Tablet Device */
+@media all and (min-width:768px) and (max-width:1024px) {
+  //사용자 해상도가 768px 이상이고 1024px 이하일 때 이 코드가 실행됨. 아이패드 또는 비교적 작은 해상도의 랩탑이나 데스크톱에 대응하는 코드를 작성한다.
+  .profile-card {
+    width: calc(100% / 3 - 20px);
+  }
+}
+
+/* Desktop Device */
+@media all and (min-width:1025px)  and (max-width:1280px) {
+  //사용자 해상도가 1025px 이상일 때 이 코드가 실행됨. 1025px 이상의 랩탑 또는 데스크톱에 대응하는 코드를 작성한다.
+  .profile-card {
+    width: calc(100% / 4 - 20px);
+  }
+}
+
+/* Desktop Device */
+@media all and (min-width:1281px) {
+  //사용자 해상도가 1025px 이상일 때 이 코드가 실행됨. 1025px 이상의 랩탑 또는 데스크톱에 대응하는 코드를 작성한다.
+  .profile-card {
+    width: calc(100% / 6 - 20px);
+  }
 }
 </style>
+
