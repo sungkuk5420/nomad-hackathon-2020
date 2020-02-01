@@ -422,14 +422,26 @@ $hover-color: #d5a009;
 @media all and (min-width:481px){
   //모바일 이외에 모든 해상도 공통
   
-  #components-layout-demo-fixed .header__bi {
-    flex: 1;
-    overflow: initial;
-    img.pc{
-      display: inline-flex;
+  #components-layout-demo-fixed{
+    .header__bi {
+      flex: 1;
+      overflow: initial;
+      img.pc{
+        display: inline-flex;
+      }
+      img.mobile{
+        display: none;
+      }
     }
-    img.mobile{
-      display: none;
+  
+    .header__menu{
+      ul{
+        li{
+          &:not(:first-child){
+            display: inline-flex;
+          }
+        }
+      }
     }
   }
 }
