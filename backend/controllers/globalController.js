@@ -96,6 +96,7 @@ export const updateTeamCard = async (req, res) => {
     findTeamCard.firstPeopleName = updateTeamCard.firstPeopleName;
     findTeamCard.secondPeopleImage = updateTeamCard.secondPeopleImage;
     findTeamCard.secondPeopleName = updateTeamCard.secondPeopleName;
+    findTeamCard.teamName = updateTeamCard.teamName;
     findTeamCard.comment = updateTeamCard.comment;
     findTeamCard.save();
     res.json(findTeamCard);

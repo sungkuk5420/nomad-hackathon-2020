@@ -168,6 +168,7 @@ export default {
           firstPeopleName: updateTeamCard.firstPeopleName,
           secondPeopleImage: updateTeamCard.secondPeopleImage,
           secondPeopleName: updateTeamCard.secondPeopleName,
+          teamName: updateTeamCard.teamName,
           comment: updateTeamCard.comment,
           password: ""
         };

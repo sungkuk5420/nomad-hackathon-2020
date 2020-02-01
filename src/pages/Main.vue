@@ -70,7 +70,8 @@
             class="ant-avatar ant-avatar-lg ant-avatar-circle ant-avatar-icon"
           />
         </div>
-        <a-card-meta :title="item.peopleName">
+        <a-card-meta :title="item.teamName&&item.teamName!=''?item.teamName:''">
+          <template slot="description" ><div class="ant-card-meta-people-name">{{ item.peopleName }}</div></template>
           <template slot="description">{{ item.comment }}</template>
         </a-card-meta>
       </a-card>
@@ -240,6 +241,19 @@ $hover-color: #d5a009;
       height: 70px;
     }
   }
+  .ant-card-meta-title{
+    margin: 0;
+    color: #f6ce19 !important;
+  }
+  .ant-card-meta-people-name{
+    overflow: hidden;
+    color: rgba(0, 0, 0, 0.85);
+    font-weight: 500;
+    font-size: 16px;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    color: #A3A3A5;
+  }
   .ant-layout-content {
     height: calc(100% - 104px);
     padding-top: 50px;
@@ -309,7 +323,7 @@ $hover-color: #d5a009;
   }
   .profile-card {
     flex: none;
-    width: calc(100% / 6 - 20px;);
+    width: calc(100% / 6 - 20px);
     margin-bottom: 20px;
     border-radius: 20px;
     background-color: #0b0b0e;
