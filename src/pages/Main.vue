@@ -188,6 +188,7 @@ $hover-color: #d5a009;
   }
   .ant-card-body {
     position: relative;
+    padding: 60px 32px 32px;
 
     .ant-card-meta-detail {
       text-align: center;
@@ -202,12 +203,27 @@ $hover-color: #d5a009;
   }
   .avatar {
     position: absolute;
-    top: -25px;
-    right: 5px;
+    top: -36px;
+    left: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+
     .ant-avatar {
       &:first-child {
-        margin-right: 5px;
+        margin-right: -12px;
+        z-index: 1;
+        border: 4px solid $main-color;
       }
+    }
+    img {
+      width: 70px;
+      height: 70px;
+    }
+    .ant-avatar-lg {
+      width: 70px;
+      height: 70px;
     }
   }
   .ant-layout-content {
