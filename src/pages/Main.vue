@@ -160,6 +160,11 @@ export default {
 $main-color: #F6CE19;
 $hover-color: #d5a009;
 
+::-webkit-scrollbar { width: 10px; }
+::-webkit-scrollbar-track { background-color: #474747; }
+::-webkit-scrollbar-thumb { background-color: $hover-color; }
+::-webkit-scrollbar-button { display: none; }
+
 @mixin nomad-btn() {
   background-color: $main-color;
   border-radius: 20px;
