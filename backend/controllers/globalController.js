@@ -32,7 +32,20 @@ export const addTeamCard = async (req, res) => {
 export const getTeamCards = async (req, res) => {
   try {
     const cards = await Card.find();
-    res.json(cards);
+    const newCards = cards.map(item => {
+      return {
+        _id: item._id,
+        teamType: item.teamType,
+        mainImage: item.mainImage,
+        firstPeopleImage: item.firstPeopleImage,
+        firstPeopleName: item.firstPeopleName,
+        secondPeopleImage: item.secondPeopleImage,
+        secondPeopleName: item.secondPeopleName,
+        teamName: item.teamName,
+        comment: item.comment
+      };
+    });
+    res.json(newCards);
     res.end();
   } catch (error) {
     console.log(error);
