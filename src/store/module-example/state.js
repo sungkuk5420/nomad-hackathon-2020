@@ -4,5 +4,5 @@ export default {
   teamCards: [],
   updateTeamCardData: null,
   // imageServerUrl: "http://localhost:4000"
-  imageServerUrl: "https://devkim.dev/hackathon"
+  imageServerUrl: "https://devkim.dev"
 };
