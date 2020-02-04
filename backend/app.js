@@ -19,7 +19,7 @@ app.set("view engine", "ejs");
 
 app.use(bodyParser.json({ limit: "4mb" }));
 app.use(bodyParser.urlencoded({ extended: true, limit: "4mb" }));
-app.use("/", globalRouter);
+app.use("/hackathon", globalRouter);
 console.log(path.join("./public"));
 app.use(express.static("public"));
 
