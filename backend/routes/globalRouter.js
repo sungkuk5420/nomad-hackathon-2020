@@ -10,7 +10,7 @@ multer.diskStorage({
   }
 });
 const uploader = multer({
-  dest: "../backend/public/cardImages/"
+  dest: "../backend/public/hackathon/cardImages/"
 });
 import {
   addTeamCard,
