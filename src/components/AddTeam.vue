@@ -215,9 +215,7 @@ export default {
       } else if (this.addTeamCard.comment == "") {
         this.$message.error("포부 한마디를 입력해주세요.");
         this.buttonLoading = false;
-      } else if (
-        this.addTeamCard.teamName == ""
-      ) {
+      } else if (this.addTeamCard.teamName == "") {
         this.$message.error("팀명을 입력해주세요.");
       } else if (this.addTeamCard.password == "") {
         this.$message.error("수정 / 삭제를 위한 비밀번호를 입력해주세요.");
@@ -253,14 +251,12 @@ export default {
       } else if (this.addTeamCard.comment == "") {
         this.$message.error("포부 한마디를 입력해주세요.");
         this.buttonLoading = false;
-      }  else if (
-        this.addTeamCard.teamName == ""
-      ) {
+      } else if (this.addTeamCard.teamName == "") {
         this.$message.error("팀명을 입력해주세요.");
       } else if (this.addTeamCard.password == "") {
         this.$message.error("수정 / 삭제를 위한 비밀번호를 입력해주세요.");
         this.buttonLoading = false;
-      }  {
+      } else {
         let vueObj = this;
         let addTeamCard = this.addTeamCard;
         setTimeout(() => {
