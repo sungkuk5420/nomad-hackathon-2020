@@ -161,25 +161,32 @@ export default {
       message: "알림",
       description:
         "상단 해커톤 텍스트를 클릭하면 전체/팀/개인/별 카드를 모아서 볼 수 있어요!",
-      duration: 3
+      duration: 3,
+      style: { top: "50px" }
     });
     this.getCards();
   },
   methods: {
     sortCard() {
+      this.$message.config({
+        top: "70px"
+      });
       if (this.sortMode == "all") {
         this.sortMode = "team";
         this.teamCardsFilter = this.teamCards.filter(
           item => item.teamType == "team"
         );
+        this.$message.success("팀 참가자만 표시");
       } else if (this.sortMode == "team") {
         this.sortMode = "alone";
         this.teamCardsFilter = this.teamCards.filter(
           item => item.teamType == "alone"
         );
+        this.$message.success("개인 참가자만 표시");
       } else {
         this.sortMode = "all";
         this.teamCardsFilter = this.teamCards;
+        this.$message.success("전체 참가자표시");
       }
     },
     showModal() {
