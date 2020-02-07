@@ -161,7 +161,7 @@ export default {
       message: "알림",
       description:
         "상단 해커톤 텍스트를 클릭하면 전체/팀/개인/별 카드를 모아서 볼 수 있어요!",
-      duration: 2
+      duration: 3
     });
     this.getCards();
   },
