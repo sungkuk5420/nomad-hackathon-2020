@@ -4,16 +4,29 @@
       <div class="header__logo">
         <img src="~assets/logo.png" alt />
       </div>
-      <div class="header__bi">
-        <img src="~assets/hackathon-bi.jpg" alt class="pc"/>
-        <img src="~assets/hackathon-bi-mobile.jpg" alt class="mobile"/>
+      <div class="header__bi" @click="sortCard">
+        <img src="~assets/hackathon-bi.jpg" alt class="pc" />
+        <img src="~assets/hackathon-bi-mobile.jpg" alt class="mobile" />
       </div>
       <div class="header__menu">
         <ul>
-          <li><a-button @click="showModal"><i class="material-icons">add</i>팀 등록</a-button></li>
-          <li><a href="https://festa.io/events/885/" target="_blank">Join Us</a></li>
-          <li><a href="https://www.youtube.com/channel/UCUpJs89fSBXNolQGOYKn0YQ?" target="_blank">Youtube</a></li>
-          <li><a href="https://www.instagram.com/nomad_coders/" target="_blank">instagram</a></li>
+          <li>
+            <a-button @click="showModal">
+              <i class="material-icons">add</i>팀 등록
+            </a-button>
+          </li>
+          <li>
+            <a href="https://festa.io/events/885/" target="_blank">Join Us</a>
+          </li>
+          <li>
+            <a
+              href="https://www.youtube.com/channel/UCUpJs89fSBXNolQGOYKn0YQ?"
+              target="_blank"
+            >Youtube</a>
+          </li>
+          <li>
+            <a href="https://www.instagram.com/nomad_coders/" target="_blank">instagram</a>
+          </li>
         </ul>
       </div>
     </a-layout-header>
@@ -25,7 +38,7 @@
         minHeight: '280px'
       }"
       :class="
-        !loading && teamCards.length == 0
+        !loading && teamCardsFilter.length == 0
           ? 'empty'
           : loading
           ? 'overflow-hidden'
@@ -35,7 +48,7 @@
       <a-card
         hoverable
         class="profile-card"
-        v-for="(item, index) in teamCards"
+        v-for="(item, index) in teamCardsFilter"
         :key="'profile-card'+index"
         v-show="!loading"
         @click="showModalUpdate(item)"
@@ -46,26 +59,20 @@
           v-if="item.mainImage&&item.mainImage!=''"
           :style="{ backgroundImage: `url('${imageServerUrl+item.mainImage}')` }"
           slot="cover"
-        >
-        </div>
+        ></div>
         <div class="main-image-text" v-if="!item.mainImage||item.mainImage==''" slot="cover">
           <div>{{item.firstPeopleName}}</div>
           <div v-if="item.teamType == 'team'">{{item.secondPeopleName}}</div>
         </div>
         <div class="avatar">
-          <a-avatar size="large" v-if="item.firstPeopleImage==''" >
-          </a-avatar>
+          <a-avatar size="large" v-if="item.firstPeopleImage==''"></a-avatar>
           <img
             alt="example"
             v-if="item.firstPeopleImage!=''"
             :src="imageServerUrl+item.firstPeopleImage"
             class="ant-avatar ant-avatar-lg ant-avatar-circle ant-avatar-icon"
           />
-          <a-avatar
-            size="large"
-            v-if="item.teamType == 'team'&&item.secondPeopleImage==''"
-          >
-          </a-avatar>
+          <a-avatar size="large" v-if="item.teamType == 'team'&&item.secondPeopleImage==''"></a-avatar>
           <img
             alt="example"
             v-if="item.teamType == 'team'&&item.secondPeopleImage!=''"
@@ -74,7 +81,9 @@
           />
         </div>
         <a-card-meta :title="item.teamName&&item.teamName!=''?item.teamName:''">
-          <template slot="description" ><div class="ant-card-meta-people-name">{{ item.peopleName }}</div></template>
+          <template slot="description">
+            <div class="ant-card-meta-people-name">{{ item.peopleName }}</div>
+          </template>
           <template slot="description">{{ item.comment }}</template>
         </a-card-meta>
       </a-card>
@@ -88,7 +97,7 @@
       ></a-skeleton>
 
       <add-team></add-team>
-      <a-empty v-show="!loading && teamCards.length == 0" />
+      <a-empty v-show="!loading && teamCardsFilter.length == 0" />
     </a-layout-content>
   </a-layout>
 </template>
@@ -104,6 +113,8 @@ export default {
   data() {
     return {
       loading: true,
+      sortMode: "all",
+      teamCardsFilter: [],
       skeletonArr: [
         {},
         {},
@@ -139,15 +150,45 @@ export default {
     teamCards(cards) {
       if (cards.length > 0) {
         this.loading = false;
+        this.teamCardsFilter = cards;
       } else {
         this.loading = false;
       }
     }
   },
   mounted() {
+    this.$notification.open({
+      message: "알림",
+      description:
+        "상단 해커톤 텍스트를 클릭하면 전체/팀/개인/별 카드를 모아서 볼 수 있어요!",
+      duration: 3,
+      style: { top: "50px" }
+    });
     this.getCards();
   },
   methods: {
+    sortCard() {
+      this.$message.config({
+        top: "70px"
+      });
+      if (this.sortMode == "all") {
+        this.sortMode = "team";
+        this.teamCardsFilter = this.teamCards.filter(
+          item => item.teamType == "team"
+        );
+        this.$message.success("팀 참가자만 표시");
+      } else if (this.sortMode == "team") {
+        this.sortMode = "alone";
+        this.teamCardsFilter = this.teamCards.filter(
+          item => item.teamType == "alone"
+        );
+        this.$message.success("개인 참가자만 표시");
+      } else {
+        this.sortMode = "all";
+        this.teamCardsFilter = this.teamCards;
+        this.$message.success("전체 참가자표시");
+      }
+    },
     showModal() {
       this.$store.dispatch(T.CHANGE_MODAL_VISIBLE);
     },
@@ -170,20 +211,28 @@ export default {
 };
 </script>
 <style lang="scss">
-$main-color: #F6CE19;
+$main-color: #f6ce19;
 $hover-color: #d5a009;
 
-::-webkit-scrollbar { width: 10px; }
-::-webkit-scrollbar-track { background-color: #474747; }
-::-webkit-scrollbar-thumb { background-color: $hover-color; }
-::-webkit-scrollbar-button { display: none; }
+::-webkit-scrollbar {
+  width: 10px;
+}
+::-webkit-scrollbar-track {
+  background-color: #474747;
+}
+::-webkit-scrollbar-thumb {
+  background-color: $hover-color;
+}
+::-webkit-scrollbar-button {
+  display: none;
+}
 
 @mixin nomad-btn() {
   background-color: $main-color;
   border-radius: 20px;
   color: #000000;
   border-style: none;
-  padding:0 20px 0 12px;
+  padding: 0 20px 0 12px;
 }
 
 .ant-layout-header {
@@ -192,7 +241,7 @@ $hover-color: #d5a009;
 }
 .ant-layout {
   height: 100%;
-  background: linear-gradient(#212121, #1F1F1F);
+  background: linear-gradient(#212121, #1f1f1f);
 }
 #components-layout-demo-fixed {
   .ant-tag {
@@ -212,7 +261,7 @@ $hover-color: #d5a009;
       text-align: center;
 
       .ant-card-meta-title {
-        color: #A3A3A5;
+        color: #a3a3a5;
       }
       .ant-card-meta-description {
         color: #ffffff;
@@ -246,19 +295,19 @@ $hover-color: #d5a009;
       height: 70px;
     }
   }
-  .ant-card-meta-title{
+  .ant-card-meta-title {
     margin: 0;
     font-size: 1.5rem;
     color: #f6ce19 !important;
   }
-  .ant-card-meta-people-name{
+  .ant-card-meta-people-name {
     overflow: hidden;
     color: rgba(0, 0, 0, 0.85);
     font-weight: 500;
     font-size: 16px;
     white-space: nowrap;
     text-overflow: ellipsis;
-    color: #A3A3A5;
+    color: #a3a3a5;
     margin-bottom: 12px;
   }
   .ant-layout-content {
@@ -290,15 +339,18 @@ $hover-color: #d5a009;
     }
     &__bi {
       flex: 1;
+      :hover {
+        cursor: pointer;
+      }
       img {
         width: auto;
         margin-left: 60px;
       }
     }
-    &__menu {  
+    &__menu {
       flex: 1;
       ul {
-        display: flex;   
+        display: flex;
         height: 100%;
         justify-content: flex-end;
         align-items: center;
@@ -315,11 +367,11 @@ $hover-color: #d5a009;
               margin-right: 10px;
               font-size: 1rem;
             }
-          } 
+          }
           a {
             color: $main-color;
             font-weight: 600;
-            font-size:1rem;
+            font-size: 1rem;
             &:hover {
               color: $hover-color;
             }
@@ -335,9 +387,9 @@ $hover-color: #d5a009;
     background-color: #0b0b0e;
     border: 1px solid #3c3939;
 
-    .main-image{
+    .main-image {
       height: 250px;
-      background-size:cover;
+      background-size: cover;
       background-position: center center;
     }
     &:not(:last-child) {
@@ -389,7 +441,6 @@ $hover-color: #d5a009;
       }
     }
   }
-  
 }
 /* Mobile Device */
 //768px 미만 해상도의 모바일 기기를 위한 코드를 작성한다. 모든 해상도에서 이 코드가 실행됨. 미디어 쿼리를 지원하지 않는 모바일 기기를 위해 미디어 쿼리 구문을 사용하지 않는다.
@@ -397,20 +448,20 @@ $hover-color: #d5a009;
 .profile-card {
   width: calc(100% / 1 - 20px);
 }
-#components-layout-demo-fixed{
+#components-layout-demo-fixed {
   .header__bi {
-    img.pc{
+    img.pc {
       display: none;
     }
-    img.mobile{
-    margin-left: 0;
+    img.mobile {
+      margin-left: 0;
       display: inline-flex;
     }
   }
-  .header__menu{
-    ul{
-      li{
-        &:not(:first-child){
+  .header__menu {
+    ul {
+      li {
+        &:not(:first-child) {
           display: none;
         }
       }
@@ -419,25 +470,25 @@ $hover-color: #d5a009;
 }
 
 /* Tablet Device */
-@media all and (min-width:481px){
+@media all and (min-width: 481px) {
   //모바일 이외에 모든 해상도 공통
-  
-  #components-layout-demo-fixed{
+
+  #components-layout-demo-fixed {
     .header__bi {
       flex: 1;
       overflow: initial;
-      img.pc{
+      img.pc {
         display: inline-flex;
       }
-      img.mobile{
+      img.mobile {
         display: none;
       }
     }
-  
-    .header__menu{
-      ul{
-        li{
-          &:not(:first-child){
+
+    .header__menu {
+      ul {
+        li {
+          &:not(:first-child) {
             display: inline-flex;
           }
         }
@@ -447,7 +498,7 @@ $hover-color: #d5a009;
 }
 
 /* Tablet Device */
-@media all and (min-width:768px) and (max-width:1024px) {
+@media all and (min-width: 768px) and (max-width: 1024px) {
   //사용자 해상도가 768px 이상이고 1024px 이하일 때 이 코드가 실행됨. 아이패드 또는 비교적 작은 해상도의 랩탑이나 데스크톱에 대응하는 코드를 작성한다.
   .profile-card {
     width: calc(100% / 3 - 20px);
@@ -455,7 +506,7 @@ $hover-color: #d5a009;
 }
 
 /* Desktop Device */
-@media all and (min-width:1025px)  and (max-width:1280px) {
+@media all and (min-width: 1025px) and (max-width: 1280px) {
   //사용자 해상도가 1025px 이상일 때 이 코드가 실행됨. 1025px 이상의 랩탑 또는 데스크톱에 대응하는 코드를 작성한다.
   .profile-card {
     width: calc(100% / 4 - 20px);
@@ -463,7 +514,7 @@ $hover-color: #d5a009;
 }
 
 /* Desktop Device */
-@media all and (min-width:1281px) {
+@media all and (min-width: 1281px) {
   //사용자 해상도가 1025px 이상일 때 이 코드가 실행됨. 1025px 이상의 랩탑 또는 데스크톱에 대응하는 코드를 작성한다.
   .profile-card {
     width: calc(100% / 6 - 20px);
