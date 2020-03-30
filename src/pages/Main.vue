@@ -8,22 +8,18 @@
         <img src="~assets/logo.png" alt />
       </div>
       <div class="header__bi" >
-        <a href="https://www.youtube.com/watch?v=d1xfSOEWP9c&feature=youtu.be" target="_blank">
         <span class="pc" style="
     color: #f6ce19;
     font-weight: 600;
     font-size: 30px;">
         Demo Day 4월 4일 수 22:00
         </span>
-        </a>
-        <a href="https://www.youtube.com/watch?v=d1xfSOEWP9c&feature=youtu.be" target="_blank">
         <span class="mobile" style="
     color: #f6ce19;
     font-weight: 600;
     font-size: 22px;">
         Demo Day 4월 4일 수 22:00
         </span>
-        </a>
         <!-- <img src="~assets/hackathon-bi.jpg" alt class="pc" /> -->
         <!-- <img src="~assets/hackathon-bi-mobile.jpg" alt class="mobile" /> -->
       </div>
