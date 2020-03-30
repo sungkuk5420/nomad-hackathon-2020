@@ -1,23 +1,42 @@
 <template>
   <a-layout id="components-layout-demo-fixed">
-    <a-layout-header :style="{ position: 'fixed', zIndex: 1, width: '100%' }" class="header">
-      <div class="header__logo">
+    <a-layout-header :style="{ position: 'fixed', zIndex: 1, width: '100%' }" class="header" @click="sortCard">
+      <div class="header__logo pc">
         <img src="~assets/logo.png" alt />
       </div>
-      <div class="header__bi" @click="sortCard">
-        <img src="~assets/hackathon-bi.jpg" alt class="pc" />
-        <img src="~assets/hackathon-bi-mobile.jpg" alt class="mobile" />
+      <div class="header__logo mobile">
+        <img src="~assets/logo.png" alt />
       </div>
-      <div class="header__menu">
+      <div class="header__bi" >
+        <a href="https://www.youtube.com/watch?v=d1xfSOEWP9c&feature=youtu.be" target="_blank">
+        <span class="pc" style="
+    color: #f6ce19;
+    font-weight: 600;
+    font-size: 30px;">
+        Demo Day 4월 4일 수 22:00
+        </span>
+        </a>
+        <a href="https://www.youtube.com/watch?v=d1xfSOEWP9c&feature=youtu.be" target="_blank">
+        <span class="mobile" style="
+    color: #f6ce19;
+    font-weight: 600;
+    font-size: 22px;">
+        Demo Day 4월 4일 수 22:00
+        </span>
+        </a>
+        <!-- <img src="~assets/hackathon-bi.jpg" alt class="pc" /> -->
+        <!-- <img src="~assets/hackathon-bi-mobile.jpg" alt class="mobile" /> -->
+      </div>
+      <div class="header__menu pc" >
         <ul>
-          <li>
+          <!-- <li>
             <a-button @click="showModal">
               <i class="material-icons">add</i>팀 등록
             </a-button>
           </li>
           <li>
             <a href="https://festa.io/events/885/" target="_blank">Join Us</a>
-          </li>
+          </li> -->
           <li>
             <a
               href="https://www.youtube.com/channel/UCUpJs89fSBXNolQGOYKn0YQ?"
@@ -52,6 +71,7 @@
         :key="'profile-card'+index"
         v-show="!loading"
         @click="showModalUpdate(item)"
+        :style="!item.complete?'opacity:0.2;':''"
       >
         <a-tag color="blue" slot="cover">{{item.teamType=='alone'?'개인':'팀'}}</a-tag>
         <div
@@ -160,7 +180,7 @@ export default {
     this.$notification.open({
       message: "알림",
       description:
-        "상단 해커톤 텍스트를 클릭하면 전체/팀/개인/별 카드를 모아서 볼 수 있어요!",
+        "상단 해커톤 로고를 클릭하면 전체/팀/개인/별 카드를 모아서 볼 수 있어요!",
       duration: 3,
       style: { top: "50px" }
     });
@@ -193,6 +213,7 @@ export default {
       this.$store.dispatch(T.CHANGE_MODAL_VISIBLE);
     },
     showModalUpdate(teamCardData) {
+      return false;
       const insertTeamCardData = teamCardData;
       this.$store.dispatch(T.INSERT_TEAM_CARD_DATA, {
         insertTeamCardData,
@@ -331,10 +352,10 @@ $hover-color: #d5a009;
     background: #000000;
     justify-content: space-between;
     &__logo {
-      flex: 1;
       img {
         width: auto;
         height: 40px;
+        margin-right: 10px;
       }
     }
     &__bi {
@@ -449,16 +470,32 @@ $hover-color: #d5a009;
   width: calc(100% / 1 - 20px);
 }
 #components-layout-demo-fixed {
-  .header__bi {
-    img.pc {
+  .header__logo {
+    &.pc{
+      flex: 1;
       display: none;
     }
-    img.mobile {
+    &.mobile{
+      display: block;
+    }
+  }
+  .header__bi {
+    .pc {
+      display: none;
+    }
+    .mobile {
       margin-left: 0;
       display: inline-flex;
     }
   }
   .header__menu {
+    &.pc {
+      display: none;
+      
+    }
+    &.mobile {
+      display: inline-flex;
+    }
     ul {
       li {
         &:not(:first-child) {
@@ -474,18 +511,35 @@ $hover-color: #d5a009;
   //모바일 이외에 모든 해상도 공통
 
   #components-layout-demo-fixed {
+    .header__logo {
+      &.pc{
+        flex: 1;
+        display: block;
+      }
+      &.mobile{
+        display: none;
+      }
+    }
     .header__bi {
       flex: 1;
       overflow: initial;
-      img.pc {
+      justify-content: center;
+      display: flex;
+      .pc {
         display: inline-flex;
       }
-      img.mobile {
+      .mobile {
         display: none;
       }
     }
 
     .header__menu {
+      &.pc {
+        display: block;
+      }
+      &.mobile {
+        display: none;
+      }
       ul {
         li {
           &:not(:first-child) {
