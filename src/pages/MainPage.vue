@@ -67,7 +67,6 @@
         :key="'profile-card'+index"
         v-show="!loading"
         @click="showModalUpdate(item)"
-        :style="!item.complete?'opacity:0.2;':''"
       >
         <a-tag color="blue" slot="cover">{{item.teamType=='alone'?'개인':'팀'}}</a-tag>
         <div
