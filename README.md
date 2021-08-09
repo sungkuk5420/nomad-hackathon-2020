@@ -1,10 +1,10 @@
-# car-repair-shop-v1
+# nomad-hackathon-2020
 
-공업사 앱 버전 1입니다.2014년 진행했던 프로젝트를 다시 복구하였습니다.
+2020년 4월에 진행한 노마드 코더의 해커톤 참가 팀 등록 사이트입니다.
 
 ## Demo / 데모
 
-[라이브 데모 보기](https://car-repair-shop-v1.netlify.app/#/)
+[라이브 데모 보기](https://nomadcoderhackathon.netlify.app/#/)
 
 ## Getting Started / 어떻게 시작하나요?
 
