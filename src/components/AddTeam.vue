@@ -141,39 +141,38 @@ export default {
   computed: {
     ...mapGetters({
       modalVisible: "getModalVisible",
-      imageServerUrl: "getImageServerUrl",
       updateTeamCardData: "getUpdateTeamCardData"
     })
   },
   watch: {
-    updateTeamCardData(updateTeamCard) {
-      if (updateTeamCard != null) {
-        this.mainImagePreview =
-          updateTeamCard.mainImage != ""
-            ? this.imageServerUrl + updateTeamCard.mainImage
-            : updateTeamCard.mainImage;
-        this.firstPeopleImagePreview =
-          updateTeamCard.firstPeopleImage != ""
-            ? this.imageServerUrl + updateTeamCard.firstPeopleImage
-            : updateTeamCard.firstPeopleImage;
-        this.secondPeopleImagePreview =
-          updateTeamCard.secondPeopleImage != ""
-            ? this.imageServerUrl + updateTeamCard.secondPeopleImage
-            : updateTeamCard.secondPeopleImage;
-        this.addTeamCard = {
-          _id: updateTeamCard._id,
-          teamType: updateTeamCard.teamType,
-          mainImage: updateTeamCard.mainImage,
-          firstPeopleImage: updateTeamCard.firstPeopleImage,
-          firstPeopleName: updateTeamCard.firstPeopleName,
-          secondPeopleImage: updateTeamCard.secondPeopleImage,
-          secondPeopleName: updateTeamCard.secondPeopleName,
-          teamName: updateTeamCard.teamName,
-          comment: updateTeamCard.comment,
-          password: ""
-        };
-      }
-    },
+    // updateTeamCardData(updateTeamCard) {
+    //   if (updateTeamCard != null) {
+    //     this.mainImagePreview =
+    //       updateTeamCard.mainImage != ""
+    //         ? updateTeamCard.mainImage
+    //         : updateTeamCard.mainImage;
+    //     this.firstPeopleImagePreview =
+    //       updateTeamCard.firstPeopleImage != ""
+    //         ? updateTeamCard.firstPeopleImage
+    //         : updateTeamCard.firstPeopleImage;
+    //     this.secondPeopleImagePreview =
+    //       updateTeamCard.secondPeopleImage != ""
+    //         ? updateTeamCard.secondPeopleImage
+    //         : updateTeamCard.secondPeopleImage;
+    //     this.addTeamCard = {
+    //       _id: updateTeamCard._id,
+    //       teamType: updateTeamCard.teamType,
+    //       mainImage: updateTeamCard.mainImage,
+    //       firstPeopleImage: updateTeamCard.firstPeopleImage,
+    //       firstPeopleName: updateTeamCard.firstPeopleName,
+    //       secondPeopleImage: updateTeamCard.secondPeopleImage,
+    //       secondPeopleName: updateTeamCard.secondPeopleName,
+    //       teamName: updateTeamCard.teamName,
+    //       comment: updateTeamCard.comment,
+    //       password: ""
+    //     };
+    //   }
+    // },
     modalVisible(value) {
       if (this.updateTeamCardData == null && value == true) {
         this.mainLoding = false;

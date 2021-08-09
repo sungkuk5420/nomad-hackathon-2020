@@ -1,36 +1,47 @@
 {
-  "name": "nomad-hackathon",
+  "name": "quasar-boilerplate",
   "version": "0.0.1",
-  "description": "2020 노마드코더 해커톤 팀 리스트",
-  "productName": "노마드해커톤",
-  "cordovaId": "org.cordova.quasar.app",
-  "author": "",
+  "description": "A Quasar Framework app",
+  "productName": "Quasar App",
+  "author": "sungkuk5420 <sungkuk5420@gamil.com>",
   "private": true,
   "scripts": {
-    "dev": "quasar dev",
-    "build": "quasar build",
-    "build:pwa": "quasar build -m pwa"
+    "lint": "eslint --ext .js,.vue ./",
+    "test": "echo \"No test specified\" && exit 0"
   },
   "dependencies": {
+    "@quasar/cli": "^1.2.1",
     "@quasar/extras": "^1.0.0",
-    "ant-design-vue": "^1.4.9",
-    "axios": "^0.18.1",
-    "global": "^4.4.0",
-    "moment": "^2.24.0",
+    "ant-design-vue": "^1.7.7",
+    "axios": "^0.21.1",
+    "core-js": "^3.6.5",
     "quasar": "^1.0.0",
-    "quasar-cli": "^0.17.26",
-    "vant": "^2.2.5"
+    "vant": "^2.12.25",
+    "vue-i18n": "^8.0.0"
   },
   "devDependencies": {
-    "@quasar/app": "^1.0.0",
-    "babel-plugin-import": "^1.12.2",
-    "node-sass": "^4.12.0",
-    "sass-loader": "^8.0.0",
-    "strip-ansi": "^3.0.1"
+    "@quasar/app": "^2.0.0",
+    "babel-eslint": "^10.0.1",
+    "eslint": "^7.21.0",
+    "eslint-config-prettier": "^8.1.0",
+    "eslint-plugin-vue": "^7.7.0",
+    "eslint-webpack-plugin": "^2.4.0"
   },
+  "browserslist": [
+    "ie >= 11",
+    "last 10 Chrome versions",
+    "last 10 Firefox versions",
+    "last 4 Edge versions",
+    "last 7 Safari versions",
+    "last 8 Android versions",
+    "last 8 ChromeAndroid versions",
+    "last 8 FirefoxAndroid versions",
+    "last 10 iOS versions",
+    "last 5 Opera versions"
+  ],
   "engines": {
-    "node": ">= 8.9.0",
-    "npm": ">= 5.6.0",
-    "yarn": ">= 1.6.0"
+    "node": ">= 10.18.1",
+    "npm": ">= 6.13.4",
+    "yarn": ">= 1.21.1"
   }
 }

@@ -1,5 +1,3 @@
-import moment from "moment";
-
 export const getters = {
   getModalVisible(state) {
     return state.modalVisible;
@@ -15,7 +13,6 @@ export const getters = {
       } else {
         item.peopleName = item.firstPeopleName;
       }
-      console.log(item.peopleName.toLowerCase())
       if(completeUsers.indexOf(item.firstPeopleName.toLowerCase()) != -1){
         item.complete=true;
       }
@@ -34,9 +31,6 @@ export const getters = {
       return 0;
     });
     return state.teamCards;
-  },
-  getImageServerUrl(state) {
-    return state.imageServerUrl;
   },
   getUpdateTeamCardData(state) {
     return state.updateTeamCardData;
