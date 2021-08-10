@@ -4,7 +4,7 @@
 
 ## Demo / 데모
 
-[라이브 데모 보기](https://nomadcoderhackathon.netlify.app/#/)
+[라이브 데모 보기](https://nomad-hackathon-2020.netlify.app/#/)
 
 ## Getting Started / 어떻게 시작하나요?
 
